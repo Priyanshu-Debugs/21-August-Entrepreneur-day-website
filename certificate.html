@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Certificate - VGEC E-Cell</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://html2canvas.js.org/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-rocket"></i>
+                <span>VGEC E-Cell</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+            </div>
+        </nav>
+
+        <!-- Certificate Section -->
+        <section class="certificate-section">
+            <div class="certificate-container">
+                <div class="certificate-header">
+                    <h2>🎉 Congratulations!</h2>
+                    <p>Your Entrepreneurship Pledge Certificate is ready</p>
+                </div>
+
+                <!-- Certificate -->
+                <div class="certificate" id="certificate">
+                    <div class="certificate-border">
+                        <div class="certificate-content">
+                            <div class="certificate-top">
+                                <div class="college-logo">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="certificate-title">
+                                    <h1>CERTIFICATE OF PLEDGE</h1>
+                                    <div class="subtitle">Vishwakarma Government Engineering College</div>
+                                    <div class="ecell-title">Entrepreneurship Cell</div>
+                                </div>
+                            </div>
+
+                            <div class="certificate-body">
+                                <div class="certificate-text">
+                                    <p class="intro-text">This is to certify that</p>
+                                    <h2 class="student-name" id="cert-name">Student Name</h2>
+                                    <p class="enrollment-text">Enrollment Number: <span id="cert-enrollment">123456789</span></p>
+                                    <p class="details-text">
+                                        <span id="cert-semester">Semester</span> Semester, <span id="cert-branch">Branch</span>
+                                    </p>
+                                    
+                                    <div class="pledge-section">
+                                        <p class="pledge-intro">has taken the</p>
+                                        <h3 class="pledge-name" id="cert-pledge-name">Pledge Name</h3>
+                                        <div class="pledge-text" id="cert-pledge-text">
+                                            Pledge description will appear here
+                                        </div>
+                                    </div>
+
+                                    <div class="commitment-text">
+                                        <p>and commits to upholding the values of entrepreneurship, innovation, and excellence in their academic and professional journey.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="certificate-footer">
+                                <div class="date-section">
+                                    <p class="date-text">Date: <span id="cert-date"></span></p>
+                                </div>
+                                
+                                <div class="signatures">
+                                    <div class="signature">
+                                        <div class="signature-line"></div>
+                                        <p>Faculty Coordinator</p>
+                                        <p>E-Cell VGEC</p>
+                                    </div>
+                                    <div class="college-seal">
+                                        <div class="seal">
+                                            <i class="fas fa-certificate"></i>
+                                            <p>Official Seal</p>
+                                        </div>
+                                    </div>
+                                    <div class="signature">
+                                        <div class="signature-line"></div>
+                                        <p>President</p>
+                                        <p>E-Cell VGEC</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="certificate-decoration">
+                                <div class="corner-decoration top-left"></div>
+                                <div class="corner-decoration top-right"></div>
+                                <div class="corner-decoration bottom-left"></div>
+                                <div class="corner-decoration bottom-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="certificate-actions">
+                    <button class="btn btn-primary" id="downloadBtn">
+                        <i class="fas fa-download"></i>
+                        Download Certificate
+                    </button>
+                    <button class="btn btn-secondary" id="shareBtn">
+                        <i class="fas fa-share-alt"></i>
+                        Share Certificate
+                    </button>
+                    <button class="btn btn-outline" onclick="window.location.href='index.html'">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </button>
+                </div>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage" style="display: none;">
+                    <div class="success-content">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Certificate Downloaded Successfully!</h3>
+                        <p>Thank you for taking the entrepreneurship pledge. Share your certificate and inspire others!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VGEC E-Cell</h3>
+                    <p>Empowering the next generation of entrepreneurs</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="index.html#pledge-form-section">Take Pledge</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-envelope"></i> ecell@vgec.edu.in</p>
+                    <p><i class="fas fa-phone"></i> +91 123 456 7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VGEC E-Cell. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="google-sheets-integration.js"></script>
+    <script src="certificate.js"></script>
+</body>
+</html>

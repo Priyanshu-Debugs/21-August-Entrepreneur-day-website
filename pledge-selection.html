@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Pledge - VGEC E-Cell</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-rocket"></i>
+                <span>VGEC E-Cell</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+            </div>
+        </nav>
+
+        <!-- Student Info Display -->
+        <section class="student-info">
+            <div class="info-container">
+                <h2>Welcome, <span id="studentName"></span>!</h2>
+                <div class="student-details">
+                    <div class="detail-item">
+                        <i class="fas fa-id-card"></i>
+                        <span>Enrollment: <strong id="studentEnrollment"></strong></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Semester: <strong id="studentSemester"></strong></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-code-branch"></i>
+                        <span>Branch: <strong id="studentBranch"></strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pledge Selection Section -->
+        <section class="pledge-selection">
+            <div class="pledge-container">
+                <div class="pledge-header">
+                    <h2>Choose Your Entrepreneurship Pledge</h2>
+                    <p>Select one pledge that resonates with your entrepreneurial journey</p>
+                </div>
+
+                <div class="pledges-grid">
+                    <div class="pledge-card" data-pledge="innovation">
+                        <div class="pledge-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Innovation Pledge</h3>
+                        <p>"I pledge to embrace creativity and innovative thinking, constantly seeking new solutions to existing problems and contributing to technological advancement."</p>
+                        <div class="pledge-features">
+                            <span><i class="fas fa-check"></i> Creative Problem Solving</span>
+                            <span><i class="fas fa-check"></i> Technology Integration</span>
+                            <span><i class="fas fa-check"></i> Future-Ready Solutions</span>
+                        </div>
+                        <button class="btn btn-primary select-pledge" data-pledge="innovation">
+                            Select This Pledge
+                        </button>
+                    </div>
+
+                    <div class="pledge-card" data-pledge="sustainability">
+                        <div class="pledge-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Sustainability Pledge</h3>
+                        <p>"I pledge to build businesses that prioritize environmental sustainability and social responsibility, creating a positive impact on our planet and society."</p>
+                        <div class="pledge-features">
+                            <span><i class="fas fa-check"></i> Environmental Focus</span>
+                            <span><i class="fas fa-check"></i> Social Responsibility</span>
+                            <span><i class="fas fa-check"></i> Sustainable Practices</span>
+                        </div>
+                        <button class="btn btn-primary select-pledge" data-pledge="sustainability">
+                            Select This Pledge
+                        </button>
+                    </div>
+
+                    <div class="pledge-card" data-pledge="leadership">
+                        <div class="pledge-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3>Leadership Pledge</h3>
+                        <p>"I pledge to develop strong leadership qualities, inspire teams, and create opportunities for others while building successful entrepreneurial ventures."</p>
+                        <div class="pledge-features">
+                            <span><i class="fas fa-check"></i> Team Building</span>
+                            <span><i class="fas fa-check"></i> Vision Development</span>
+                            <span><i class="fas fa-check"></i> Mentorship</span>
+                        </div>
+                        <button class="btn btn-primary select-pledge" data-pledge="leadership">
+                            Select This Pledge
+                        </button>
+                    </div>
+
+                    <div class="pledge-card" data-pledge="excellence">
+                        <div class="pledge-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Excellence Pledge</h3>
+                        <p>"I pledge to pursue excellence in all my endeavors, continuously learn and improve, and set high standards for quality in my entrepreneurial journey."</p>
+                        <div class="pledge-features">
+                            <span><i class="fas fa-check"></i> Quality Standards</span>
+                            <span><i class="fas fa-check"></i> Continuous Learning</span>
+                            <span><i class="fas fa-check"></i> Performance Excellence</span>
+                        </div>
+                        <button class="btn btn-primary select-pledge" data-pledge="excellence">
+                            Select This Pledge
+                        </button>
+                    </div>
+
+                    <div class="pledge-card" data-pledge="collaboration">
+                        <div class="pledge-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Collaboration Pledge</h3>
+                        <p>"I pledge to foster collaboration, build strong partnerships, and believe in the power of collective effort to achieve entrepreneurial success."</p>
+                        <div class="pledge-features">
+                            <span><i class="fas fa-check"></i> Partnership Building</span>
+                            <span><i class="fas fa-check"></i> Team Collaboration</span>
+                            <span><i class="fas fa-check"></i> Network Development</span>
+                        </div>
+                        <button class="btn btn-primary select-pledge" data-pledge="collaboration">
+                            Select This Pledge
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VGEC E-Cell</h3>
+                    <p>Empowering the next generation of entrepreneurs</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="index.html#pledge-form-section">Take Pledge</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-envelope"></i> ecell@vgec.edu.in</p>
+                    <p><i class="fas fa-phone"></i> +91 123 456 7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VGEC E-Cell. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="google-sheets-integration.js"></script>
+    <script src="pledge-selection.js"></script>
+</body>
+</html>
