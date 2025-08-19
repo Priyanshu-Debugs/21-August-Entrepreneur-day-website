@@ -1,0 +1,195 @@
+/* General Body Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem 3rem;
+    box-sizing: border-box;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1.5rem;
+}
+
+.logo {
+    max-width: 150px;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #0056b3;
+    margin: 0.5rem 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Form Styles */
+#userInfoForm, #pledgeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.2);
+}
+
+/* Button Styles */
+.btn {
+    padding: 0.9rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    background-color: #a0c8f0;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Pledge Page Specifics */
+.pledge-text {
+    background-color: #f9f9f9;
+    border-left: 4px solid #007bff;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    border-radius: 4px;
+}
+
+.pledge-agreement {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+#agree {
+    width: 18px;
+    height: 18px;
+}
+
+/* Certificate Styles */
+#certificate-wrapper {
+    border: 10px solid #0056b3;
+    padding: 2rem;
+    background: url('https://www.toptal.com/designers/subtlepatterns/uploads/light-paper-fibers.png') #ffffff;
+    text-align: center;
+    position: relative;
+}
+
+.cert-header, .cert-footer {
+    margin-bottom: 1.5rem;
+}
+
+.cert-title {
+    font-size: 2.5rem;
+    font-family: 'Georgia', serif;
+    color: #0056b3;
+    margin: 1rem 0;
+}
+
+.cert-subtitle {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.cert-body p {
+    font-size: 1.1rem;
+    margin: 1rem 0;
+}
+
+#participant-name {
+    font-size: 2.2rem;
+    font-family: 'Brush Script MT', cursive;
+    color: #d4af37;
+    border-bottom: 2px solid #d4af37;
+    display: inline-block;
+    padding-bottom: 5px;
+    margin: 1.5rem 0;
+}
+
+.cert-footer p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.cert-logo {
+    max-width: 120px;
+    margin-bottom: 1rem;
+}
+
+/* Download Section */
+.download-section {
+    text-align: center;
+    margin-top: 2rem;
+}
