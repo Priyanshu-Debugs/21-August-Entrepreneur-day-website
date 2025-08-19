@@ -1,195 +1,112 @@
-/* General Body Styles */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-    margin: 0;
-    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
 }
 
-/* Container */
 .container {
-    width: 100%;
-    max-width: 600px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 2rem 3rem;
-    box-sizing: border-box;
-}
-
-/* Header */
-header {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 1.5rem;
-}
-
-.logo {
-    max-width: 150px;
-    margin-bottom: 1rem;
+    max-width: 600px;
+    width: 90%;
 }
 
 h1 {
-    font-size: 1.8rem;
     color: #0056b3;
-    margin: 0.5rem 0;
-}
-
-h2 {
-    font-size: 1.5rem;
-    color: #333;
-    text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
+    font-size: 2.5em;
 }
 
 p {
-    font-size: 1rem;
-    color: #666;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
 }
 
-/* Form Styles */
-#userInfoForm, #pledgeForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #555;
-}
-
-input[type="text"],
-input[type="number"],
-select {
-    padding: 0.8rem;
-    border: 1px solid #ccc;
+input[type="text"] {
+    padding: 12px 15px;
+    margin: 0 5px;
+    border: 2px solid #ddd;
     border-radius: 5px;
-    font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    font-size: 1em;
+    width: calc(100% - 120px); /* Adjust width for better fit */
+    max-width: 250px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-select:focus {
+input[type="text"]:focus {
+    border-color: #007bff;
     outline: none;
-    border-color: #0056b3;
-    box-shadow: 0 0 5px rgba(0, 86, 179, 0.2);
 }
 
-/* Button Styles */
-.btn {
-    padding: 0.9rem 1.5rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #fff;
+button {
     background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
     border: none;
     border-radius: 5px;
+    font-size: 1.2em;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    text-align: center;
-    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.btn:hover {
+button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
 }
 
-.btn:disabled {
-    background-color: #a0c8f0;
-    cursor: not-allowed;
-    transform: none;
+button:active {
+    transform: translateY(0);
 }
 
-/* Pledge Page Specifics */
-.pledge-text {
-    background-color: #f9f9f9;
-    border-left: 4px solid #007bff;
-    padding: 1.5rem;
-    margin: 1rem 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    border-radius: 4px;
-}
-
-.pledge-agreement {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 1rem;
-}
-
-#agree {
-    width: 18px;
-    height: 18px;
-}
-
-/* Certificate Styles */
-#certificate-wrapper {
-    border: 10px solid #0056b3;
-    padding: 2rem;
-    background: url('https://www.toptal.com/designers/subtlepatterns/uploads/light-paper-fibers.png') #ffffff;
+/* Certificate Styling */
+#certificate {
+    width: 800px;
+    height: 600px;
+    padding: 50px;
+    box-sizing: border-box;
+    background: linear-gradient(to bottom, #fdfbfb, #ebedee);
+    border: 10px solid #ffd700;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
     text-align: center;
-    position: relative;
-}
-
-.cert-header, .cert-footer {
-    margin-bottom: 1.5rem;
-}
-
-.cert-title {
-    font-size: 2.5rem;
     font-family: 'Georgia', serif;
-    color: #0056b3;
-    margin: 1rem 0;
-}
-
-.cert-subtitle {
-    font-size: 1.2rem;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.cert-body p {
-    font-size: 1.1rem;
-    margin: 1rem 0;
+.certificate-content h1 {
+    font-size: 3.5em;
+    color: #8b4513; /* SaddleBrown */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-#participant-name {
-    font-size: 2.2rem;
-    font-family: 'Brush Script MT', cursive;
-    color: #d4af37;
-    border-bottom: 2px solid #d4af37;
-    display: inline-block;
-    padding-bottom: 5px;
-    margin: 1.5rem 0;
+.certificate-content p {
+    font-size: 1.4em;
+    margin-bottom: 10px;
 }
 
-.cert-footer p {
-    font-size: 0.9rem;
+.certificate-content h2 {
+    font-size: 3em;
+    color: #0056b3;
+    margin: 30px 0;
+    text-transform: capitalize;
+}
+
+.certificate-content .date {
+    font-size: 1.2em;
+    margin-top: 40px;
     color: #555;
-}
-
-.cert-logo {
-    max-width: 120px;
-    margin-bottom: 1rem;
-}
-
-/* Download Section */
-.download-section {
-    text-align: center;
-    margin-top: 2rem;
 }
