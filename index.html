@@ -3,146 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VGEC E-Cell - Entrepreneurship Pledge</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Take the Pledge</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <!-- Navigation -->
-        <nav class="navbar">
-            <div class="nav-brand">
-                <i class="fas fa-rocket"></i>
-                <span>VGEC E-Cell</span>
-            </div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-            </div>
-        </nav>
-
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Welcome to <span class="highlight">VGEC E-Cell</span></h1>
-                    <h2>Vishwakarma Government Engineering College</h2>
-                    <p>Join us in taking the Entrepreneurship Pledge and become part of the innovation revolution!</p>
-                    <div class="cta-buttons">
-                        <button class="btn btn-primary" onclick="scrollToForm()">
-                            <i class="fas fa-hand-paper"></i>
-                            Take the Pledge
-                        </button>
-                        <button class="btn btn-secondary" onclick="learnMore()">
-                            <i class="fas fa-info-circle"></i>
-                            Learn More
-                        </button>
-                    </div>
-                </div>
-                <div class="hero-graphic">
-                    <div class="floating-icons">
-                        <i class="fas fa-lightbulb"></i>
-                        <i class="fas fa-rocket"></i>
-                        <i class="fas fa-chart-line"></i>
-                        <i class="fas fa-handshake"></i>
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Form Section -->
-        <section class="form-section" id="pledge-form-section">
-            <div class="form-container">
-                <div class="form-header">
-                    <h2>Entrepreneurship Pledge Registration</h2>
-                    <p>Fill in your details to proceed with the entrepreneurship pledge</p>
-                </div>
-                
-                <form id="studentForm" class="student-form">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="fullName">
-                                <i class="fas fa-user"></i>
-                                Full Name
-                            </label>
-                            <input type="text" id="fullName" name="fullName" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="enrollmentNumber">
-                                <i class="fas fa-id-card"></i>
-                                Enrollment Number
-                            </label>
-                            <input type="text" id="enrollmentNumber" name="enrollmentNumber" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="semester">
-                                <i class="fas fa-graduation-cap"></i>
-                                Semester
-                            </label>
-                            <select id="semester" name="semester" required>
-                                <option value="">Select Semester</option>
-                                <option value="1">1st Semester</option>
-                                <option value="3">3rd Semester</option>
-                                <option value="5">5th Semester</option>
-                                <option value="7">7th Semester</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="branch">
-                                <i class="fas fa-code-branch"></i>
-                                Branch
-                            </label>
-                            <select id="branch" name="branch" required>
-                                <option value="">Select Branch</option>
-                                <option value="Computer Engineering">Computer Engineering</option>
-                                <option value="Information Technology">Information Technology</option>
-                                <option value="Electronics & Communication">Electronics & Communication</option>
-                                <option value="Electrical Engineering">Electrical Engineering</option>
-                                <option value="Mechanical Engineering">Mechanical Engineering</option>
-                                <option value="Civil Engineering">Civil Engineering</option>
-                                <option value="Chemical Engineering">Chemical Engineering</option>
-                                <option value="Biomedical Engineering">Biomedical Engineering</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary submit-btn">
-                        <i class="fas fa-arrow-right"></i>
-                        Proceed to Pledge Selection
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>VGEC E-Cell</h3>
-                    <p>Empowering the next generation of entrepreneurs</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="#home">Home</a>
-                    <a href="#pledge-form-section">Take Pledge</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p><i class="fas fa-envelope"></i> ecell@vgec.edu.in</p>
-                    <p><i class="fas fa-phone"></i> +91 123 456 7890</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 VGEC E-Cell. All rights reserved.</p>
-            </div>
-        </footer>
+        <h1>Take the Pledge</h1>
+        <p>I, <input type="text" id="userName" placeholder="Enter your full name">, hereby pledge to uphold the values of integrity, respect, and responsibility in all my endeavors. I commit to making a positive impact on my community and the world.</p>
+        <button id="pledgeButton">I Take the Pledge</button>
     </div>
 
-    <script src="google-sheets-integration.js"></script>
+    <!-- Certificate Template (Hidden) -->
+    <div id="certificate" style="display: none;">
+        <div class="certificate-content">
+            <h1>Certificate of Pledge</h1>
+            <p>This certificate is proudly presented to</p>
+            <h2 id="certName"></h2>
+            <p>for taking the pledge to uphold the values of integrity, respect, and responsibility.</p>
+            <p class="date">Date: <span id="certDate"></span></p>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
