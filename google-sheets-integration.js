@@ -15,6 +15,64 @@ class GoogleSheetsIntegration {
         this.isConfigured = true; // Set to true since we have the spreadsheet ID
     }
 
+    // Check if enrollment number already exists
+    async checkDuplicateEnrollment(enrollmentNumber) {
+        try {
+            // First check local storage
+            const localData = this.getLocalData();
+            const localDuplicate = localData.registrations.find(reg => 
+                reg.enrollmentNumber === enrollmentNumber
+            ) || localData.pledges.find(pledge => 
+                pledge.enrollmentNumber === enrollmentNumber
+            );
+            
+            if (localDuplicate) {
+                return {
+                    isDuplicate: true,
+                    source: 'local',
+                    data: localDuplicate
+                };
+            }
+            
+            // If Google Sheets integration is available, check there too
+            if (this.SHEET_URL && this.SHEET_URL !== 'PENDING_DEPLOYMENT') {
+                try {
+                    const response = await fetch(this.SHEET_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'checkDuplicate',
+                            enrollmentNumber: enrollmentNumber
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.isDuplicate) {
+                            return {
+                                isDuplicate: true,
+                                source: 'sheets',
+                                data: result.data
+                            };
+                        }
+                    }
+                } catch (sheetError) {
+                    console.log('Could not check Google Sheets for duplicates:', sheetError);
+                    // Continue with local check only
+                }
+            }
+            
+            return { isDuplicate: false };
+            
+        } catch (error) {
+            console.error('Error checking for duplicate enrollment:', error);
+            // If there's an error, allow the registration to proceed
+            return { isDuplicate: false };
+        }
+    }
+
     // Configure the Google Sheets URL
     configure(sheetUrl) {
         this.SHEET_URL = sheetUrl;

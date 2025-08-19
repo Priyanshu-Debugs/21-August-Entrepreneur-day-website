@@ -7,10 +7,12 @@ This is a comprehensive web application for Vishwakarma Government Engineering C
 ## ✨ Features
 
 ### 🎯 Core Functionality
-- **Student Registration Form** - Collects student details (Name, Enrollment, Semester, Branch)
+- **🛡️ Duplicate Prevention System** - Prevents students with same enrollment number from registering multiple times
+- **Student Registration Form** - Collects student details with multi-layer validation (Name, Enrollment, Semester, Branch)
 - **Pledge Selection** - Choose from 5 different entrepreneurship pledges
-- **Certificate Generation** - Automatic certificate creation with student details
-- **Download & Share** - Download certificates as images and share them
+- **Enhanced Certificate System** - Multiple format downloads with quality options
+- **Advanced Download Features** - PNG, JPEG, Ultra HD, PDF formats
+- **Quick & Options Download** - Instant download or detailed format selection
 - **Google Sheets Integration** - Store all data in Google Sheets automatically
 
 ### 🎨 Design Features
@@ -18,12 +20,16 @@ This is a comprehensive web application for Vishwakarma Government Engineering C
 - **Responsive Design** - Works perfectly on all devices (mobile, tablet, desktop)
 - **Interactive Elements** - Hover effects, animations, and smooth transitions
 - **Professional Certificate** - Well-designed certificate with official styling
+- **Enhanced Download Modal** - Beautiful interface for format selection
 
 ### 🔧 Technical Features
+- **Multi-Format Certificate Export** - PNG (High/Ultra HD), JPEG, PDF formats
+- **High-Resolution Support** - Up to 4x scaling for print-quality images
 - **Data Persistence** - Local storage backup when offline
 - **Error Handling** - Graceful error handling and user feedback
 - **Performance Optimized** - Fast loading and smooth interactions
 - **Cross-browser Compatible** - Works on all modern browsers
+- **Background Processing** - Non-blocking downloads with progress indicators
 
 ## 📁 File Structure
 
@@ -183,16 +189,74 @@ function doPost(e) {
 - **Responsive Grid** - Adapts to different screen sizes
 
 ### Certificate Generation
-- **High Quality** - 2x resolution for crisp images
-- **Multiple Formats** - PNG download and print support
-- **Social Sharing** - Built-in sharing functionality
-- **Automatic Population** - All student data filled automatically
+- **🎨 Multiple Formats**:
+  - **PNG High Quality** (3x resolution) - Perfect for social media sharing
+  - **PNG Ultra HD** (4x resolution) - Print-ready professional quality
+  - **JPEG Compressed** - Smaller file size for easy email/messaging
+  - **PDF A4 Format** - Professional document for official use
+
+- **⚡ Download Options**:
+  - **Quick Download** - One-click PNG download with optimal quality
+  - **Download Options Modal** - Choose specific format and quality
+  - **Download All Formats** - Get all formats automatically
+  - **Print Option** - Direct browser printing
+
+- **🔧 Advanced Features**:
+  - **High Resolution Export** - Up to 4x scaling for ultra-crisp images
+  - **Background Processing** - Non-blocking downloads with progress indicators
+  - **Mobile Optimized** - Touch-friendly interface for mobile devices
+  - **Loading Animations** - Beautiful loading states and success notifications
+  - **Error Recovery** - Graceful error handling with retry options
+
+- **📱 User Experience**:
+  - **Animated UI** - Smooth transitions and micro-interactions
+  - **Progress Feedback** - Real-time download progress indication
+  - **Success Notifications** - Toast messages and visual confirmations
+  - **Keyboard Shortcuts** - Ctrl+S for download, Ctrl+P for print
+  - **Automatic Population** - All student data filled automatically
 
 ### Data Management
-- **Offline Support** - Works without internet connection
-- **Data Backup** - Local storage backup of all submissions
-- **Sync Capability** - Sync offline data when connection restored
-- **Export Options** - CSV export for manual backup
+- **🛡️ Duplicate Prevention System**:
+  - **Local Storage Check** - Instant validation against browser storage
+  - **Google Sheets Verification** - Cross-device duplicate detection
+  - **Multi-Layer Protection** - Dual-checking for maximum data integrity
+  - **User-Friendly Errors** - Beautiful modals showing existing registration details
+  - **Graceful Fallback** - Continues working even if one system fails
+  - **Real-time Validation** - Checks during form submission with loading indicators
+
+- **Data Storage & Backup**:
+  - **Offline Support** - Works without internet connection
+  - **Data Backup** - Local storage backup of all submissions
+  - **Sync Capability** - Sync offline data when connection restored
+  - **Export Options** - CSV export for manual backup
+  - **Cross-Platform Sync** - Google Sheets ensures data consistency across devices
+
+## 🛡️ Duplicate Prevention System
+
+### How It Works
+1. **Form Submission** - Student submits registration form
+2. **Local Check** - Instantly checks browser's local storage for enrollment number
+3. **Remote Check** - Verifies against Google Sheets database (if available)
+4. **Error Display** - Shows detailed duplicate information if found
+5. **Prevention** - Blocks duplicate registration and suggests alternatives
+
+### Technical Implementation
+```javascript
+// Dual-layer duplicate checking
+const duplicateCheck = await googleSheets.checkDuplicateEnrollment(enrollmentNumber);
+if (duplicateCheck.isDuplicate) {
+    showDuplicateError(duplicateCheck);
+    return; // Prevent registration
+}
+```
+
+### Features
+- ✅ **Instant Local Validation** - No network delay for local duplicates
+- ✅ **Cross-Device Protection** - Prevents duplicates across different browsers/devices  
+- ✅ **Professional Error UI** - Beautiful animated error modals
+- ✅ **Detailed Information** - Shows existing registration details
+- ✅ **Fallback Protection** - Works even if Google Sheets is unavailable
+- ✅ **Data Integrity** - Ensures one certificate per student
 
 ## 🚨 Troubleshooting
 

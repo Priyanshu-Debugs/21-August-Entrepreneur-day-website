@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Download Test - VGEC E-Cell</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://html2canvas.js.org/dist/html2canvas.min.js"></script>
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .debug-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+        .warning { color: #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="test-container">
+            <h1>🧪 Certificate Download Test</h1>
+            <p>This page will help us debug the certificate download functionality.</p>
+            
+            <div class="debug-info">
+                <h3>Debug Information:</h3>
+                <div id="debugInfo">Loading...</div>
+            </div>
+            
+            <div style="margin: 2rem 0;">
+                <h3>Test Steps:</h3>
+                <button class="test-button" onclick="step1()">
+                    <i class="fas fa-play"></i> Step 1: Setup Test Data
+                </button>
+                <button class="test-button" onclick="step2()">
+                    <i class="fas fa-check"></i> Step 2: Check Libraries
+                </button>
+                <button class="test-button" onclick="step3()">
+                    <i class="fas fa-image"></i> Step 3: Test Simple Capture
+                </button>
+                <button class="test-button" onclick="step4()">
+                    <i class="fas fa-download"></i> Step 4: Test Download
+                </button>
+                <button class="test-button" onclick="goToCertificate()">
+                    <i class="fas fa-certificate"></i> Go to Certificate Page
+                </button>
+            </div>
+            
+            <!-- Simple test certificate -->
+            <div id="testCertificate" style="background: white; padding: 2rem; border: 2px solid #667eea; border-radius: 10px; text-align: center; margin: 2rem 0;">
+                <h2 style="color: #667eea; margin-bottom: 1rem;">
+                    <i class="fas fa-university"></i> VGEC E-Cell
+                </h2>
+                <h3>Test Certificate</h3>
+                <p><strong>Name:</strong> Test Student</p>
+                <p><strong>Enrollment:</strong> TEST123</p>
+                <p><strong>Date:</strong> <span id="testDate"></span></p>
+                <div style="margin-top: 2rem;">
+                    <i class="fas fa-certificate" style="font-size: 2rem; color: #ffd700;"></i>
+                </div>
+            </div>
+            
+            <div id="results" class="debug-info">
+                <h3>Test Results:</h3>
+                <div id="testResults">Click the test buttons above to run diagnostics.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set test date
+        document.getElementById('testDate').textContent = new Date().toLocaleDateString();
+        
+        function updateDebugInfo() {
+            const debugDiv = document.getElementById('debugInfo');
+            let info = '';
+            
+            info += `<div>Browser: ${navigator.userAgent}</div>`;
+            info += `<div>HTML2Canvas Loaded: <span class="${typeof html2canvas !== 'undefined' ? 'success' : 'error'}">${typeof html2canvas !== 'undefined' ? 'YES' : 'NO'}</span></div>`;
+            info += `<div>Local Storage Available: <span class="${typeof Storage !== 'undefined' ? 'success' : 'error'}">${typeof Storage !== 'undefined' ? 'YES' : 'NO'}</span></div>`;
+            info += `<div>Download API: <span class="${document.createElement('a').download !== undefined ? 'success' : 'error'}">${document.createElement('a').download !== undefined ? 'YES' : 'NO'}</span></div>`;
+            
+            debugDiv.innerHTML = info;
+        }
+        
+        function addResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('testResults');
+            const timestamp = new Date().toLocaleTimeString();
+            resultsDiv.innerHTML += `<div class="${type}">[${timestamp}] ${message}</div>`;
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+        
+        function step1() {
+            addResult('Setting up test data...', 'info');
+            
+            const testData = {
+                fullName: 'Test Student',
+                enrollmentNumber: 'TEST123',
+                semester: '5',
+                branch: 'Computer Engineering',
+                pledgeName: 'Innovation Pledge',
+                pledgeText: 'I pledge to innovate and create solutions for tomorrow.',
+                pledgeDate: new Date().toLocaleDateString()
+            };
+            
+            localStorage.setItem('completeStudentData', JSON.stringify(testData));
+            addResult('✅ Test data saved to localStorage', 'success');
+            console.log('Test data:', testData);
+        }
+        
+        function step2() {
+            addResult('Checking required libraries...', 'info');
+            
+            if (typeof html2canvas === 'undefined') {
+                addResult('❌ html2canvas library not loaded!', 'error');
+                addResult('💡 Try refreshing the page', 'warning');
+                return;
+            }
+            
+            addResult('✅ html2canvas library loaded successfully', 'success');
+            addResult(`📦 html2canvas version: ${html2canvas.version || 'unknown'}`, 'info');
+        }
+        
+        function step3() {
+            addResult('Testing simple canvas capture...', 'info');
+            
+            if (typeof html2canvas === 'undefined') {
+                addResult('❌ html2canvas not available', 'error');
+                return;
+            }
+            
+            const testElement = document.getElementById('testCertificate');
+            
+            const options = {
+                backgroundColor: '#ffffff',
+                scale: 1,
+                useCORS: true,
+                allowTaint: true,
+                logging: true
+            };
+            
+            html2canvas(testElement, options)
+                .then(canvas => {
+                    addResult('✅ Canvas created successfully', 'success');
+                    addResult(`📐 Canvas size: ${canvas.width}x${canvas.height}`, 'info');
+                    
+                    // Try to convert to data URL
+                    try {
+                        const dataURL = canvas.toDataURL('image/png');
+                        if (dataURL.startsWith('data:image/png')) {
+                            addResult('✅ PNG conversion successful', 'success');
+                        } else {
+                            addResult('❌ PNG conversion failed', 'error');
+                        }
+                    } catch (error) {
+                        addResult(`❌ PNG conversion error: ${error.message}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    addResult(`❌ Canvas capture failed: ${error.message}`, 'error');
+                    console.error('html2canvas error:', error);
+                });
+        }
+        
+        function step4() {
+            addResult('Testing download functionality...', 'info');
+            
+            if (typeof html2canvas === 'undefined') {
+                addResult('❌ html2canvas not available', 'error');
+                return;
+            }
+            
+            const testElement = document.getElementById('testCertificate');
+            
+            html2canvas(testElement, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                useCORS: true,
+                allowTaint: true
+            })
+            .then(canvas => {
+                try {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png', 1.0);
+                    link.download = 'test_certificate.png';
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    addResult('✅ Download triggered successfully!', 'success');
+                } catch (error) {
+                    addResult(`❌ Download failed: ${error.message}`, 'error');
+                }
+            })
+            .catch(error => {
+                addResult(`❌ Canvas generation failed: ${error.message}`, 'error');
+            });
+        }
+        
+        function goToCertificate() {
+            // Make sure test data is available
+            step1();
+            setTimeout(() => {
+                window.location.href = 'certificate.html';
+            }, 500);
+        }
+        
+        // Initialize
+        updateDebugInfo();
+        addResult('🚀 Test page loaded. Click Step 1 to begin.', 'info');
+        
+        // Auto-refresh debug info every 2 seconds
+        setInterval(updateDebugInfo, 2000);
+    </script>
+</body>
+</html>

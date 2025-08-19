@@ -61,6 +61,55 @@ function doPost(e) {
     const data = JSON.parse(e.postData.contents);
     const sheet = SpreadsheetApp.openById('13Ziu6ch9shGKV7MYAIfZrFoXVAiBgN8sI07LoBKRVNY');
     
+    // Handle duplicate check request
+    if (data.action === 'checkDuplicate') {
+      const enrollmentNumber = data.enrollmentNumber;
+      
+      // Check in Registrations sheet
+      let registrationSheet = sheet.getSheetByName('Registrations');
+      if (registrationSheet) {
+        const regData = registrationSheet.getDataRange().getValues();
+        for (let i = 1; i < regData.length; i++) { // Skip header row
+          if (regData[i][2] === enrollmentNumber) { // Column 2 is enrollment number
+            return ContentService.createTextOutput(JSON.stringify({
+              isDuplicate: true,
+              data: {
+                fullName: regData[i][1],
+                enrollmentNumber: regData[i][2],
+                semester: regData[i][3],
+                branch: regData[i][4],
+                submissionDate: regData[i][5]
+              }
+            })).setMimeType(ContentService.MimeType.JSON);
+          }
+        }
+      }
+      
+      // Check in Pledges sheet
+      let pledgeSheet = sheet.getSheetByName('Pledges');
+      if (pledgeSheet) {
+        const pledgeData = pledgeSheet.getDataRange().getValues();
+        for (let i = 1; i < pledgeData.length; i++) { // Skip header row
+          if (pledgeData[i][2] === enrollmentNumber) { // Column 2 is enrollment number
+            return ContentService.createTextOutput(JSON.stringify({
+              isDuplicate: true,
+              data: {
+                fullName: pledgeData[i][1],
+                enrollmentNumber: pledgeData[i][2],
+                pledgeName: pledgeData[i][6],
+                submissionDate: pledgeData[i][9]
+              }
+            })).setMimeType(ContentService.MimeType.JSON);
+          }
+        }
+      }
+      
+      // No duplicate found
+      return ContentService.createTextOutput(JSON.stringify({
+        isDuplicate: false
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+    
     if (data.action === 'addRegistration') {
       let registrationSheet = sheet.getSheetByName('Registrations');
       if (!registrationSheet) {

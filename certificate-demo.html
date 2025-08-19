@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Download Features Demo - VGEC E-Cell</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://html2canvas.js.org/dist/html2canvas.min.js"></script>
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #FFD93D, #FF6B6B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-card h3 {
+            color: #4ECDC4;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-card i {
+            font-size: 1.5rem;
+        }
+        
+        .format-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .format-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .format-item:hover {
+            border-color: #4ECDC4;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .quality-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        .quality-high { background: linear-gradient(45deg, #4CAF50, #45a049); }
+        .quality-ultra { background: linear-gradient(45deg, #FFD93D, #FF6B6B); }
+        .quality-compressed { background: linear-gradient(45deg, #2196F3, #1976D2); }
+        .quality-professional { background: linear-gradient(45deg, #FF5722, #D84315); }
+        
+        .demo-certificate {
+            background: white;
+            color: #333;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border: 3px solid #FFD93D;
+        }
+        
+        .test-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 4px solid #4ECDC4;
+        }
+        
+        .instructions h3 {
+            color: #4ECDC4;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions ol {
+            margin-left: 1rem;
+        }
+        
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎓 Enhanced Certificate Download System</h1>
+            <p>Experience the new and improved certificate download features for VGEC E-Cell</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3><i class="fas fa-images"></i> Multiple Formats</h3>
+                <p>Download your certificate in various formats:</p>
+                <div class="format-showcase">
+                    <div class="format-item">
+                        <i class="fas fa-image" style="color: #FF6B6B; font-size: 2rem;"></i>
+                        <h4>PNG</h4>
+                        <div class="quality-indicator quality-high">High Quality</div>
+                    </div>
+                    <div class="format-item">
+                        <i class="fas fa-file-image" style="color: #4ECDC4; font-size: 2rem;"></i>
+                        <h4>JPEG</h4>
+                        <div class="quality-indicator quality-compressed">Compressed</div>
+                    </div>
+                    <div class="format-item">
+                        <i class="fas fa-crown" style="color: #FFD93D; font-size: 2rem;"></i>
+                        <h4>Ultra HD</h4>
+                        <div class="quality-indicator quality-ultra">Print Quality</div>
+                    </div>
+                    <div class="format-item">
+                        <i class="fas fa-file-pdf" style="color: #FF5722; font-size: 2rem;"></i>
+                        <h4>PDF</h4>
+                        <div class="quality-indicator quality-professional">Professional</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3><i class="fas fa-magic"></i> Quality Options</h3>
+                <ul>
+                    <li><strong>High Quality (3x)</strong> - Perfect for sharing online</li>
+                    <li><strong>Ultra HD (4x)</strong> - Professional print quality</li>
+                    <li><strong>Medium (2x)</strong> - Balanced size and quality</li>
+                    <li><strong>PDF A4</strong> - Ready-to-print document format</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3><i class="fas fa-bolt"></i> Enhanced Features</h3>
+                <ul>
+                    <li><i class="fas fa-download" style="color: #4CAF50;"></i> Quick PNG download button</li>
+                    <li><i class="fas fa-palette" style="color: #FF6B6B;"></i> Interactive download modal</li>
+                    <li><i class="fas fa-layer-group" style="color: #4ECDC4;"></i> Download all formats at once</li>
+                    <li><i class="fas fa-share-alt" style="color: #FFD93D;"></i> Improved sharing options</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>🚀 How to Use the New Certificate System</h3>
+            <ol>
+                <li><strong>Complete the form</strong> on the main page</li>
+                <li><strong>Select your pledge</strong> from the 5 entrepreneurship options</li>
+                <li><strong>Go to certificate page</strong> - your data will be automatically filled</li>
+                <li><strong>Choose download option:</strong>
+                    <ul>
+                        <li><strong>Quick Download PNG</strong> - Instant high-quality PNG download</li>
+                        <li><strong>Download Options</strong> - Choose format, quality, or download all</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Demo Certificate -->
+        <div class="demo-certificate" id="demoCertificate">
+            <h2>🎓 DEMO CERTIFICATE</h2>
+            <h1 style="color: #667eea; margin: 1rem 0;">VGEC E-CELL</h1>
+            <p><strong>Certificate of Entrepreneurship Pledge</strong></p>
+            <h3 style="color: #FF6B6B;">Demo Student Name</h3>
+            <p>Enrollment: DEMO123 | 5th Semester, Computer Engineering</p>
+            <div style="margin: 2rem 0; padding: 1rem; background: #f0f8ff; border-radius: 10px;">
+                <h4 style="color: #4ECDC4;">Innovation Pledge</h4>
+                <p style="font-style: italic;">"I pledge to foster innovation and creativity in everything I do..."</p>
+            </div>
+            <p><strong>Date:</strong> August 21, 2024</p>
+            <div style="margin-top: 2rem;">
+                <span style="padding: 0.5rem 1rem; background: #4ECDC4; color: white; border-radius: 20px;">
+                    <i class="fas fa-certificate"></i> Official Certificate
+                </span>
+            </div>
+        </div>
+
+        <div class="test-buttons">
+            <button class="btn btn-primary" onclick="testDownloadOptions()">
+                <i class="fas fa-images"></i> Test Download Options
+            </button>
+            <button class="btn btn-success" onclick="testQuickDownload()">
+                <i class="fas fa-download"></i> Test Quick Download
+            </button>
+            <button class="btn btn-secondary" onclick="testAllFormats()">
+                <i class="fas fa-layer-group"></i> Test Download All
+            </button>
+            <button class="btn btn-outline" onclick="window.location.href='index.html'" style="color: white; border-color: white;">
+                <i class="fas fa-home"></i> Back to Main Site
+            </button>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+            <h3>🎯 Ready to Get Your Real Certificate?</h3>
+            <p>Complete the actual form and pledge process to generate your personalized certificate!</p>
+            <a href="index.html" class="btn btn-primary" style="margin-top: 1rem; text-decoration: none; display: inline-block;">
+                <i class="fas fa-rocket"></i> Start Your Journey
+            </a>
+        </div>
+    </div>
+
+    <script src="certificate.js"></script>
+    <script>
+        // Mock data for demo
+        window.certificateData = {
+            fullName: 'Demo Student',
+            enrollmentNumber: 'DEMO123',
+            semester: '5',
+            branch: 'Computer Engineering',
+            pledgeName: 'Innovation Pledge',
+            pledgeText: 'I pledge to foster innovation and creativity in everything I do...',
+            pledgeDate: 'August 21, 2024'
+        };
+
+        function testDownloadOptions() {
+            showDownloadOptions();
+        }
+
+        function testQuickDownload() {
+            downloadCertificate('png', 'high');
+        }
+
+        function testAllFormats() {
+            downloadAllFormats();
+        }
+
+        // Override the certificate element for demo
+        document.getElementById = function(id) {
+            if (id === 'certificate') {
+                return document.querySelector('#demoCertificate');
+            }
+            return document.querySelector('#' + id);
+        };
+    </script>
+</body>
+</html>

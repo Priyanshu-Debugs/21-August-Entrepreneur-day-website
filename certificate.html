@@ -7,7 +7,59 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://html2canvas.js.org/dist/html2canvas.min.js"></script>
+    
+    <!-- Multiple CDN sources for html2canvas -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Fallback to alternative CDN if first one fails
+        if (typeof html2canvas === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>');
+        }
+    </script>
+    <script>
+        // Second fallback
+        if (typeof html2canvas === 'undefined') {
+            document.write('<script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"><\/script>');
+        }
+    </script>
+    
+    <!-- Additional styles for better screenshots -->
+    <style>
+        .certificate {
+            /* Ensure certificate renders well for screenshots */
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        /* Right-click context menu enhancement */
+        .certificate {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            position: relative;
+        }
+        
+        /* Add right-click instruction overlay */
+        .screenshot-help {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .certificate:hover .screenshot-help {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -32,6 +84,9 @@
 
                 <!-- Certificate -->
                 <div class="certificate" id="certificate">
+                    <div class="screenshot-help">
+                        <i class="fas fa-mouse"></i> Right-click to save
+                    </div>
                     <div class="certificate-border">
                         <div class="certificate-content">
                             <div class="certificate-top">
@@ -107,7 +162,7 @@
                 <div class="certificate-actions">
                     <button class="btn btn-primary" id="downloadBtn">
                         <i class="fas fa-download"></i>
-                        Download Certificate
+                        Download Certificate (PNG)
                     </button>
                     <button class="btn btn-secondary" id="shareBtn">
                         <i class="fas fa-share-alt"></i>

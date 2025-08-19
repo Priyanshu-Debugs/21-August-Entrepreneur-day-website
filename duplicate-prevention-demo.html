@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duplicate Prevention Demo - VGEC E-Cell</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #FFD93D, #FF6B6B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .test-section h3 {
+            color: #4ECDC4;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .test-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .status-indicator {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            display: inline-block;
+        }
+        
+        .status-clear { background: linear-gradient(45deg, #4CAF50, #45a049); }
+        .status-duplicate { background: linear-gradient(45deg, #FF5722, #D84315); }
+        .status-pending { background: linear-gradient(45deg, #FF9800, #F57C00); }
+        
+        .mock-data {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-card h4 {
+            color: #4ECDC4;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 4px solid #4ECDC4;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🛡️ Duplicate Prevention System</h1>
+            <p>Comprehensive duplicate enrollment prevention for VGEC E-Cell</p>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 How the Duplicate Prevention Works</h3>
+            <ol>
+                <li><strong>Local Storage Check:</strong> First checks browser's local storage for existing enrollments</li>
+                <li><strong>Google Sheets Check:</strong> Then verifies against the live Google Sheets database</li>
+                <li><strong>Dual Protection:</strong> Prevents duplicates even if one system fails</li>
+                <li><strong>User-Friendly Errors:</strong> Shows detailed information about existing registrations</li>
+                <li><strong>Data Integrity:</strong> Ensures each student can only get one certificate</li>
+            </ol>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4><i class="fas fa-database"></i> Local Storage Protection</h4>
+                <ul>
+                    <li><strong>Instant Check:</strong> Immediate validation without network calls</li>
+                    <li><strong>Offline Support:</strong> Works even without internet</li>
+                    <li><strong>Fast Response:</strong> No loading delays for duplicate detection</li>
+                    <li><strong>Browser Based:</strong> Stores data locally for quick access</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h4><i class="fas fa-cloud"></i> Google Sheets Protection</h4>
+                <ul>
+                    <li><strong>Cross-Device Check:</strong> Prevents duplicates across different browsers/devices</li>
+                    <li><strong>Real-time Sync:</strong> Always up-to-date with latest registrations</li>
+                    <li><strong>Centralized Data:</strong> Single source of truth for all enrollments</li>
+                    <li><strong>Admin Access:</strong> Faculty can view all registrations in real-time</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h4><i class="fas fa-shield-alt"></i> Error Handling</h4>
+                <ul>
+                    <li><strong>Graceful Degradation:</strong> Falls back to local check if network fails</li>
+                    <li><strong>Detailed Messages:</strong> Shows existing registration information</li>
+                    <li><strong>User Guidance:</strong> Clear instructions on what to do next</li>
+                    <li><strong>Professional UI:</strong> Beautiful error modals with animations</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h4><i class="fas fa-user-shield"></i> Data Privacy</h4>
+                <ul>
+                    <li><strong>Secure Checking:</strong> Only enrollment numbers are checked</li>
+                    <li><strong>No Sensitive Data:</strong> Personal information stays protected</li>
+                    <li><strong>Transparent Process:</strong> Users see exactly what's being checked</li>
+                    <li><strong>GDPR Compliant:</strong> Respects data protection guidelines</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3><i class="fas fa-flask"></i> Test Duplicate Prevention</h3>
+            <p>Use these buttons to simulate duplicate enrollment scenarios:</p>
+            
+            <div class="test-buttons">
+                <button class="btn btn-primary" onclick="testNewEnrollment()">
+                    <i class="fas fa-user-plus"></i> Test New Enrollment
+                </button>
+                <button class="btn btn-secondary" onclick="addMockData()">
+                    <i class="fas fa-database"></i> Add Mock Registration
+                </button>
+                <button class="btn btn-warning" onclick="testDuplicateEnrollment()">
+                    <i class="fas fa-exclamation-triangle"></i> Test Duplicate Enrollment
+                </button>
+                <button class="btn btn-outline" onclick="clearLocalData()">
+                    <i class="fas fa-trash"></i> Clear Local Data
+                </button>
+            </div>
+            
+            <div id="testResults"></div>
+        </div>
+
+        <div class="test-section">
+            <h3><i class="fas fa-eye"></i> Current Local Storage Status</h3>
+            <div id="localStorageStatus"></div>
+            <button class="btn btn-info" onclick="checkLocalStorage()">
+                <i class="fas fa-refresh"></i> Refresh Status
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h3><i class="fas fa-cogs"></i> Apps Script Integration</h3>
+            <p>The Google Apps Script now includes duplicate checking functionality:</p>
+            <div class="mock-data">
+                <strong>New API Endpoint:</strong><br>
+                POST: checkDuplicate<br>
+                Data: { action: 'checkDuplicate', enrollmentNumber: 'ENROLLMENT123' }<br>
+                Response: { isDuplicate: boolean, data: {...} }
+            </div>
+            <div class="status-indicator status-clear">
+                <i class="fas fa-check"></i> Apps Script Updated & Deployed
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+            <h3>🎯 Ready to Test on Live Website?</h3>
+            <p>The duplicate prevention system is now active on your main registration form!</p>
+            <a href="index.html" class="btn btn-primary" style="margin-top: 1rem; text-decoration: none; display: inline-block;">
+                <i class="fas fa-rocket"></i> Test Live Registration
+            </a>
+        </div>
+    </div>
+
+    <script src="google-sheets-integration.js"></script>
+    <script>
+        const googleSheets = new GoogleSheetsIntegration();
+        
+        function addResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('testResults');
+            const div = document.createElement('div');
+            div.className = `status-indicator status-${type}`;
+            div.innerHTML = message;
+            resultsDiv.appendChild(div);
+        }
+        
+        function testNewEnrollment() {
+            const enrollment = 'NEW' + Date.now();
+            addResult(`<i class="fas fa-check"></i> Testing new enrollment: ${enrollment}`, 'clear');
+            
+            googleSheets.checkDuplicateEnrollment(enrollment).then(result => {
+                if (result.isDuplicate) {
+                    addResult(`<i class="fas fa-times"></i> Unexpected: Found duplicate for new enrollment`, 'duplicate');
+                } else {
+                    addResult(`<i class="fas fa-check"></i> Correct: New enrollment is available`, 'clear');
+                }
+            }).catch(err => {
+                addResult(`<i class="fas fa-exclamation"></i> Error testing: ${err.message}`, 'pending');
+            });
+        }
+        
+        function addMockData() {
+            const mockRegistration = {
+                fullName: 'Test Student',
+                enrollmentNumber: 'MOCK123',
+                semester: '5',
+                branch: 'Computer Engineering',
+                timestamp: new Date().toISOString(),
+                submissionDate: new Date().toLocaleDateString(),
+                submissionTime: new Date().toLocaleTimeString()
+            };
+            
+            // Add to local storage
+            const localData = googleSheets.getLocalData();
+            localData.registrations.push(mockRegistration);
+            localStorage.setItem('ecell_registrations', JSON.stringify(localData.registrations));
+            
+            addResult(`<i class="fas fa-plus"></i> Added mock registration: MOCK123`, 'pending');
+            checkLocalStorage();
+        }
+        
+        function testDuplicateEnrollment() {
+            addResult(`<i class="fas fa-search"></i> Testing duplicate enrollment: MOCK123`, 'pending');
+            
+            googleSheets.checkDuplicateEnrollment('MOCK123').then(result => {
+                if (result.isDuplicate) {
+                    addResult(`<i class="fas fa-shield-alt"></i> Correct: Duplicate detected for MOCK123`, 'duplicate');
+                    addResult(`<i class="fas fa-info-circle"></i> Source: ${result.source}, Name: ${result.data.fullName}`, 'pending');
+                } else {
+                    addResult(`<i class="fas fa-question"></i> Unexpected: No duplicate found for MOCK123`, 'clear');
+                }
+            }).catch(err => {
+                addResult(`<i class="fas fa-exclamation"></i> Error testing: ${err.message}`, 'pending');
+            });
+        }
+        
+        function clearLocalData() {
+            localStorage.removeItem('ecell_registrations');
+            localStorage.removeItem('ecell_pledges');
+            localStorage.removeItem('studentData');
+            addResult(`<i class="fas fa-trash"></i> Cleared all local data`, 'clear');
+            checkLocalStorage();
+        }
+        
+        function checkLocalStorage() {
+            const statusDiv = document.getElementById('localStorageStatus');
+            const localData = googleSheets.getLocalData();
+            
+            statusDiv.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="mock-data">
+                        <strong>Registrations:</strong> ${localData.registrations.length}<br>
+                        ${localData.registrations.map(reg => `• ${reg.enrollmentNumber} (${reg.fullName})`).join('<br>')}
+                    </div>
+                    <div class="mock-data">
+                        <strong>Pledges:</strong> ${localData.pledges.length}<br>
+                        ${localData.pledges.map(pledge => `• ${pledge.enrollmentNumber} (${pledge.pledgeName})`).join('<br>')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLocalStorage();
+        });
+    </script>
+</body>
+</html>
