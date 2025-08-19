@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take the Pledge</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Take the Pledge</h1>
+        <p>I, <input type="text" id="userName" placeholder="Enter your full name">, hereby pledge to uphold the values of integrity, respect, and responsibility in all my endeavors. I commit to making a positive impact on my community and the world.</p>
+        <button id="pledgeButton">I Take the Pledge</button>
+    </div>
+
+    <!-- Certificate Template (Hidden) -->
+    <div id="certificate" style="display: none;">
+        <div class="certificate-content">
+            <h1>Certificate of Pledge</h1>
+            <p>This certificate is proudly presented to</p>
+            <h2 id="certName"></h2>
+            <p>for taking the pledge to uphold the values of integrity, respect, and responsibility.</p>
+            <p class="date">Date: <span id="certDate"></span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
