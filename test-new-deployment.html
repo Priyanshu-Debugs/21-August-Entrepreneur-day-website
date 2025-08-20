@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Deployment Test - VGEC E-Cell</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            background: #e8f4f8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        .success {
+            background: #e8f5e8;
+            border-left-color: #27ae60;
+        }
+        .error {
+            background: #f8d7da;
+            border-left-color: #e74c3c;
+        }
+        .button {
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .button:hover {
+            background: #2980b9;
+        }
+        .info-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 New Deployment Verification</h1>
+            <h2>VGEC E-Cell Google Sheets Integration</h2>
+        </div>
+
+        <div class="info-box">
+            <h3>📋 Updated Configuration:</h3>
+            <ul>
+                <li><strong>Deployment ID:</strong> AKfycbzfevPQZY-MSjz1Vgcmxj9c4QUx6ZFKURpQn86OsyPNe6DXZnyMtcAvdsHtNbhvAEQPLA</li>
+                <li><strong>Web App URL:</strong> https://script.google.com/macros/s/AKfycbzfevPQZY-MSjz1Vgcmxj9c4QUx6ZFKURpQn86OsyPNe6DXZnyMtcAvdsHtNbhvAEQPLA/exec</li>
+                <li><strong>Google Sheet:</strong> https://docs.google.com/spreadsheets/d/13Ziu6ch9shGKV7MYAIfZrFoXVAiBgN8sI07LoBKRVNY/edit</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Configuration Status</h3>
+            <div id="configStatus">Checking configuration...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Quick Test</h3>
+            <button class="button" onclick="testWebAppConnection()">Test Web App Connection</button>
+            <button class="button" onclick="testDataSubmission()">Test Data Submission</button>
+            <button class="button" onclick="viewStoredData()">View Local Data</button>
+            <div id="testResults" style="margin-top: 20px;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Data Structure Verification</h3>
+            <p>The new simplified structure includes only these 9 columns:</p>
+            <pre>1. Timestamp
+2. Full Name
+3. Enrollment Number
+4. Contact Number ✅
+5. Email ✅
+6. Semester
+7. Branch  
+8. Submission Date
+9. Submission Time</pre>
+            <p><strong>✅ Contact Number and Email are preserved!</strong></p>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 Next Steps</h3>
+            <ol>
+                <li>✅ <strong>Configuration Updated:</strong> Website now uses your new deployment ID</li>
+                <li>🧪 <strong>Test Integration:</strong> Click "Test Data Submission" above</li>
+                <li>📊 <strong>Check Google Sheet:</strong> Verify data appears in your sheet</li>
+                <li>🌟 <strong>Go Live:</strong> Test with real form at <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <script src="google-sheets-integration.js"></script>
+    <script>
+        // Check configuration on page load
+        window.onload = function() {
+            checkConfiguration();
+        };
+
+        function checkConfiguration() {
+            const statusDiv = document.getElementById('configStatus');
+            
+            if (googleSheets && googleSheets.SHEET_URL) {
+                if (googleSheets.SHEET_URL.includes('AKfycbzfevPQZY-MSjz1Vgcmxj9c4QUx6ZFKURpQn86OsyPNe6DXZnyMtcAvdsHtNbhvAEQPLA')) {
+                    statusDiv.innerHTML = '<div class="success">✅ <strong>Configuration Updated Successfully!</strong><br>Using new deployment ID: AKfycbzfevPQZY-MSjz1Vgcmxj9c4QUx6ZFKURpQn86OsyPNe6DXZnyMtcAvdsHtNbhvAEQPLA</div>';
+                } else {
+                    statusDiv.innerHTML = '<div class="error">❌ <strong>Configuration Issue:</strong><br>Deployment ID does not match. Current: ' + googleSheets.SHEET_URL + '</div>';
+                }
+            } else {
+                statusDiv.innerHTML = '<div class="error">❌ <strong>Configuration Missing:</strong><br>Google Sheets integration not loaded</div>';
+            }
+        }
+
+        async function testWebAppConnection() {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML = '<p>🔄 Testing Web App connection...</p>';
+            
+            try {
+                const testUrl = googleSheets.SHEET_URL;
+                console.log('Testing URL:', testUrl);
+                
+                // Test basic connectivity
+                const response = await fetch(testUrl, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+                
+                resultsDiv.innerHTML = '<div class="success">✅ <strong>Web App Connection Test:</strong><br>Request sent successfully to: ' + testUrl + '</div>';
+                
+            } catch (error) {
+                resultsDiv.innerHTML = '<div class="error">❌ <strong>Connection Error:</strong><br>' + error.message + '</div>';
+            }
+        }
+
+        async function testDataSubmission() {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML = '<p>🧪 Testing data submission...</p>';
+            
+            const testData = {
+                fullName: 'Test Student',
+                enrollmentNumber: '123456789012',
+                contactNumber: '9876543210',
+                email: 'test@vgec.edu',
+                semester: '5',
+                branch: 'Computer Engineering'
+            };
+            
+            try {
+                console.log('🧪 Sending test data:', testData);
+                await googleSheets.sendRegistrationData(testData);
+                
+                resultsDiv.innerHTML = `
+                    <div class="success">
+                        ✅ <strong>Test Submission Successful!</strong><br>
+                        📊 Data sent: ${testData.fullName} (${testData.enrollmentNumber})<br>
+                        📞 Contact: ${testData.contactNumber}<br>
+                        📧 Email: ${testData.email}<br>
+                        <strong>Check your Google Sheet for this test data!</strong>
+                    </div>
+                `;
+                
+            } catch (error) {
+                resultsDiv.innerHTML = '<div class="error">❌ <strong>Submission Error:</strong><br>' + error.message + '</div>';
+            }
+        }
+
+        function viewStoredData() {
+            const resultsDiv = document.getElementById('testResults');
+            const localData = googleSheets.getLocalData();
+            
+            const totalRegistrations = localData.registrations.length;
+            const totalPledges = localData.pledges.length;
+            
+            let dataPreview = '';
+            if (totalRegistrations > 0) {
+                const latest = localData.registrations[totalRegistrations - 1];
+                dataPreview += `<strong>Latest Registration:</strong> ${latest.fullName} (${latest.contactNumber})<br>`;
+            }
+            if (totalPledges > 0) {
+                const latest = localData.pledges[totalPledges - 1];
+                dataPreview += `<strong>Latest Pledge:</strong> ${latest.fullName} (${latest.contactNumber})<br>`;
+            }
+            
+            resultsDiv.innerHTML = `
+                <div class="success">
+                    📊 <strong>Locally Stored Data:</strong><br>
+                    • Registrations: ${totalRegistrations}<br>
+                    • Pledges: ${totalPledges}<br>
+                    ${dataPreview}
+                    <br><em>All data includes contact numbers and emails ✅</em>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

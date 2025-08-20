@@ -10,7 +10,7 @@ class GoogleSheetsIntegration {
         this.SCRIPT_PROJECT_ID = '15EZws74-F2d37PGSzLciE7aOTSTX0uOAQ9SuPtDXm77dzRvscrtHp80-';
         this.SCRIPT_EDITOR_URL = 'https://script.google.com/home/projects/15EZws74-F2d37PGSzLciE7aOTSTX0uOAQ9SuPtDXm77dzRvscrtHp80-/edit';
         // Your NEW Google Apps Script Web App URL with updated deployment ID
-        this.SHEET_URL = 'https://script.google.com/macros/s/AKfycbzrnWnf6a7RjkxsFiw3r973R0Hf5Rqw0F87Xlw-VjsVxBcvd3NbKGPfEagYG3bFB1pWmQ/exec';
+        this.SHEET_URL = 'https://script.google.com/macros/s/AKfycbzfevPQZY-MSjz1Vgcmxj9c4QUx6ZFKURpQn86OsyPNe6DXZnyMtcAvdsHtNbhvAEQPLA/exec';
         this.SPREADSHEET_ID = '13Ziu6ch9shGKV7MYAIfZrFoXVAiBgN8sI07LoBKRVNY';
         this.isConfigured = true; // Set to true since we have the spreadsheet ID and Web App URL
     }
@@ -95,7 +95,7 @@ class GoogleSheetsIntegration {
     generateCSVForGoogleSheets(data, type) {
         const headers = type === 'registrations' 
             ? ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Submission Date', 'Submission Time']
-            : ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Pledge Type', 'Pledge Name', 'Pledge Text', 'Pledge Date', 'Submission Date', 'Submission Time'];
+            : ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Submission Date', 'Submission Time'];
         
         const csvRows = [headers.join(',')];
         
@@ -120,10 +120,6 @@ class GoogleSheetsIntegration {
                     item.email || '',
                     item.semester || '',
                     item.branch || '',
-                    item.pledgeType || '',
-                    item.pledgeName || '',
-                    item.pledgeText || '',
-                    item.pledgeDate || '',
                     item.submissionDate || new Date().toLocaleDateString('en-IN'),
                     item.submissionTime || new Date().toLocaleTimeString('en-IN')
                 ];
@@ -446,8 +442,8 @@ function doPost(e) {
       let pledgeSheet = sheet.getSheetByName('Pledges');
       if (!pledgeSheet) {
         pledgeSheet = sheet.insertSheet('Pledges');
-        pledgeSheet.getRange(1, 1, 1, 13).setValues([
-          ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Pledge Type', 'Pledge Name', 'Pledge Text', 'Pledge Date', 'Submission Date', 'Submission Time']
+        pledgeSheet.getRange(1, 1, 1, 9).setValues([
+          ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Submission Date', 'Submission Time']
         ]);
       }
       
@@ -455,14 +451,10 @@ function doPost(e) {
         data.timestamp,
         data.fullName,
         data.enrollmentNumber,
-        data.contactNumber,
-        data.email,
+        data.contactNumber || '',
+        data.email || '',
         data.semester,
         data.branch,
-        data.pledgeType,
-        data.pledgeName,
-        data.pledgeText,
-        data.pledgeDate,
         data.submissionDate,
         data.submissionTime
       ]);
