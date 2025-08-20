@@ -571,7 +571,7 @@ function copyToClipboard(text) {
 // Show download success message
 function showDownloadSuccess(format = 'PNG') {
     console.log('Showing download success message');
-    showToast(`✅ Certificate downloaded successfully as ${format}!`, 'success');
+    showToast(`✅ Certificate downloaded successfully as PDF!`, 'success');
 }
 
 // Show error message

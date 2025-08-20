@@ -3,8 +3,52 @@
 // Student data storage
 let studentData = {};
 
-// Add contact number and email to studentData on form submit
+// Debug function to check stored data
+function debugStoredData() {
+    const registrations = JSON.parse(localStorage.getItem('allRegistrations') || '[]');
+    const pledges = JSON.parse(localStorage.getItem('allPledges') || '[]');
+    
+    console.log('=== DEBUG: Stored Data ===');
+    console.log('Registrations:', registrations);
+    console.log('Pledges:', pledges);
+    
+    if (registrations.length > 0) {
+        console.log('Latest Registration:', registrations[registrations.length - 1]);
+    }
+    
+    if (pledges.length > 0) {
+        console.log('Latest Pledge:', pledges[pledges.length - 1]);
+    }
+    
+    return { registrations, pledges };
+}
+
+// Add debug button to page
 document.addEventListener('DOMContentLoaded', function() {
+    // Add debug button in development
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        const debugBtn = document.createElement('button');
+        debugBtn.innerHTML = '🔍 Debug Data';
+        debugBtn.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 1000;
+            font-weight: bold;
+        `;
+        debugBtn.onclick = () => {
+            const data = debugStoredData();
+            alert(`Registrations: ${data.registrations.length}\nPledges: ${data.pledges.length}\nCheck console for details`);
+        };
+        document.body.appendChild(debugBtn);
+    }
+    
     const form = document.getElementById('studentForm');
     if (form) {
         form.addEventListener('submit', function(e) {
@@ -89,6 +133,58 @@ function validateEnrollmentNumber(input) {
     input.parentElement.appendChild(indicator);
 }
 
+// Real-time contact number validation
+function validateContactNumber(input) {
+    // Remove any non-digit characters
+    input.value = input.value.replace(/\D/g, '');
+    
+    // Limit to 10 digits
+    if (input.value.length > 10) {
+        input.value = input.value.slice(0, 10);
+    }
+    
+    // Remove existing validation indicators
+    const existingIndicator = input.parentElement.querySelector('.validation-indicator');
+    if (existingIndicator) {
+        existingIndicator.remove();
+    }
+    
+    // Create validation indicator
+    const indicator = document.createElement('div');
+    indicator.className = 'validation-indicator';
+    indicator.style.cssText = `
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    `;
+    
+    if (input.value.length === 0) {
+        // No input yet
+        return;
+    } else if (input.value.length < 10) {
+        // Too short
+        indicator.style.color = '#ff6b6b';
+        indicator.innerHTML = `
+            <i class="fas fa-exclamation-circle"></i>
+            <span>${input.value.length}/10 digits - Please enter ${10 - input.value.length} more digit(s)</span>
+        `;
+        input.style.borderColor = '#ff6b6b';
+    } else if (input.value.length === 10) {
+        // Perfect
+        indicator.style.color = '#4ecdc4';
+        indicator.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            <span>Perfect! 10 digits entered</span>
+        `;
+        input.style.borderColor = '#4ecdc4';
+    }
+    
+    input.parentElement.appendChild(indicator);
+}
+
 // Form validation and submission
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('studentForm');
@@ -102,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
             studentData = {
                 fullName: formData.get('fullName'),
                 enrollmentNumber: formData.get('enrollmentNumber'),
+                contactNumber: formData.get('contactNumber'),
+                email: formData.get('email'),
                 semester: formData.get('semester'),
                 branch: formData.get('branch')
             };
@@ -153,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function sendToGoogleSheets(data) {
     try {
         const googleSheets = new GoogleSheetsIntegration();
-        await googleSheets.addRegistration(data);
+        await googleSheets.sendRegistrationData(data);
         console.log('Registration data sent to Google Sheets successfully');
     } catch (error) {
         console.error('Error sending data to Google Sheets:', error);
@@ -164,7 +262,7 @@ async function sendToGoogleSheets(data) {
 // Form validation
 function validateForm(data) {
     // Check if all fields are filled
-    if (!data.fullName || !data.enrollmentNumber || !data.semester || !data.branch) {
+    if (!data.fullName || !data.enrollmentNumber || !data.contactNumber || !data.email || !data.semester || !data.branch) {
         showError('Please fill in all fields');
         return false;
     }
@@ -178,6 +276,19 @@ function validateForm(data) {
     // Validate enrollment number (should be exactly 12 digits)
     if (!/^\d{12}$/.test(data.enrollmentNumber)) {
         showError('Enrollment number must be exactly 12 digits');
+        return false;
+    }
+    
+    // Validate contact number (should be exactly 10 digits)
+    if (!/^\d{10}$/.test(data.contactNumber)) {
+        showError('Contact number must be exactly 10 digits');
+        return false;
+    }
+    
+    // Validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(data.email)) {
+        showError('Please enter a valid email address');
         return false;
     }
     

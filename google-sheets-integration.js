@@ -5,14 +5,14 @@
 class GoogleSheetsIntegration {
     constructor() {
         // Your Google Sheets document URL (for reference)
-        this.SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/13Ziu6ch9shGKV7MYAIfZrFoXVAiBgN8sI07LoBKRVNY/edit?gid=0#gid=0';
+        this.SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/13Ziu6ch9shGKV7MYAIfZrFoXVAiBgN8sI07LoBKRVNY/edit?gid=52018415#gid=52018415';
         // Your Google Apps Script Project ID
         this.SCRIPT_PROJECT_ID = '15EZws74-F2d37PGSzLciE7aOTSTX0uOAQ9SuPtDXm77dzRvscrtHp80-';
         this.SCRIPT_EDITOR_URL = 'https://script.google.com/home/projects/15EZws74-F2d37PGSzLciE7aOTSTX0uOAQ9SuPtDXm77dzRvscrtHp80-/edit';
-        // Your Google Apps Script Web App URL (to be configured after deployment)
-        this.SHEET_URL = 'https://script.google.com/macros/s/AKfycbwj43HT9otDzjSM_QQasATyri3rg7xQCL5wSbn8niVWTT1gSsmragQgoEE_HU1NzGm74w/exec';
+        // Your NEW Google Apps Script Web App URL with updated deployment ID
+        this.SHEET_URL = 'https://script.google.com/macros/s/AKfycbzrnWnf6a7RjkxsFiw3r973R0Hf5Rqw0F87Xlw-VjsVxBcvd3NbKGPfEagYG3bFB1pWmQ/exec';
         this.SPREADSHEET_ID = '13Ziu6ch9shGKV7MYAIfZrFoXVAiBgN8sI07LoBKRVNY';
-        this.isConfigured = true; // Set to true since we have the spreadsheet ID
+        this.isConfigured = true; // Set to true since we have the spreadsheet ID and Web App URL
     }
 
     // Check if enrollment number already exists
@@ -105,6 +105,8 @@ class GoogleSheetsIntegration {
                     item.timestamp || new Date().toISOString(),
                     item.fullName || '',
                     item.enrollmentNumber || '',
+                    item.contactNumber || '',
+                    item.email || '',
                     item.semester || '',
                     item.branch || '',
                     item.submissionDate || new Date().toLocaleDateString('en-IN'),
@@ -114,6 +116,8 @@ class GoogleSheetsIntegration {
                     item.timestamp || new Date().toISOString(),
                     item.fullName || '',
                     item.enrollmentNumber || '',
+                    item.contactNumber || '',
+                    item.email || '',
                     item.semester || '',
                     item.branch || '',
                     item.pledgeType || '',
@@ -132,13 +136,20 @@ class GoogleSheetsIntegration {
 
     // Send student registration data to Google Sheets
     async sendRegistrationData(studentData) {
+        // Debug: Log the data being sent
+        console.log('🔍 DEBUG: Sending registration data:', studentData);
+        
         // Always store locally first
         const dataWithTimestamp = {
             ...studentData,
+            contactNumber: studentData.contactNumber || '', // Ensure contactNumber is included
+            email: studentData.email || '', // Ensure email is included
             timestamp: new Date().toISOString(),
             submissionDate: new Date().toLocaleDateString('en-IN'),
             submissionTime: new Date().toLocaleTimeString('en-IN')
         };
+        
+        console.log('🔍 DEBUG: Data with timestamp:', dataWithTimestamp);
         
         this.storeDataLocally('registrations', dataWithTimestamp);
         console.log('✅ Registration data stored locally:', dataWithTimestamp);
@@ -151,6 +162,9 @@ class GoogleSheetsIntegration {
                     ...dataWithTimestamp
                 };
 
+                console.log('🚀 Sending registration data to Google Sheets:', dataToSend);
+                console.log('📡 Web App URL:', this.SHEET_URL);
+
                 const response = await fetch(this.SHEET_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -161,28 +175,33 @@ class GoogleSheetsIntegration {
                 });
 
                 console.log('✅ Registration data sent to Google Sheets successfully');
+                console.log('📊 Data included contact:', dataWithTimestamp.contactNumber, 'and email:', dataWithTimestamp.email);
                 
             } catch (error) {
                 console.error('❌ Error sending registration data to Google Sheets:', error);
             }
         } else {
-            console.log('� Google Apps Script Web App not deployed yet.');
-            console.log('📝 Script Editor URL:', this.SCRIPT_EDITOR_URL);
-            console.log('💡 Data is safely stored locally. Deploy the script to enable auto-sync.');
+            console.log('⚠️ Google Apps Script Web App not properly configured.');
+            console.log('📝 Current SHEET_URL:', this.SHEET_URL);
         }
     }
 
     // Send complete pledge data to Google Sheets
     async sendPledgeData(completeData) {
+        // Debug: Log the data being sent
+        console.log('🔍 DEBUG: Sending pledge data:', completeData);
+        
         // Always store locally first
         const dataWithTimestamp = {
             ...completeData,
-            contactNumber: completeData.contactNumber,
-            email: completeData.email,
+            contactNumber: completeData.contactNumber || '', // Ensure contactNumber is included
+            email: completeData.email || '', // Ensure email is included
             timestamp: new Date().toISOString(),
             submissionDate: new Date().toLocaleDateString('en-IN'),
             submissionTime: new Date().toLocaleTimeString('en-IN')
         };
+        
+        console.log('🔍 DEBUG: Pledge data with timestamp:', dataWithTimestamp);
         
         this.storeDataLocally('pledges', dataWithTimestamp);
         console.log('✅ Pledge data stored locally:', dataWithTimestamp);
@@ -195,6 +214,9 @@ class GoogleSheetsIntegration {
                     ...dataWithTimestamp
                 };
 
+                console.log('🚀 Sending pledge data to Google Sheets:', dataToSend);
+                console.log('📡 Web App URL:', this.SHEET_URL);
+
                 const response = await fetch(this.SHEET_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -205,14 +227,14 @@ class GoogleSheetsIntegration {
                 });
 
                 console.log('✅ Pledge data sent to Google Sheets successfully');
+                console.log('📊 Data included contact:', dataWithTimestamp.contactNumber, 'and email:', dataWithTimestamp.email);
                 
             } catch (error) {
                 console.error('❌ Error sending pledge data to Google Sheets:', error);
             }
         } else {
-            console.log('� Google Apps Script Web App not deployed yet.');
-            console.log('📝 Script Editor URL:', this.SCRIPT_EDITOR_URL);
-            console.log('💡 Data is safely stored locally. Deploy the script to enable auto-sync.');
+            console.log('⚠️ Google Apps Script Web App not properly configured.');
+            console.log('📝 Current SHEET_URL:', this.SHEET_URL);
         }
     }
 
@@ -403,8 +425,8 @@ function doPost(e) {
       let registrationSheet = sheet.getSheetByName('Registrations');
       if (!registrationSheet) {
         registrationSheet = sheet.insertSheet('Registrations');
-        registrationSheet.getRange(1, 1, 1, 7).setValues([
-          ['Timestamp', 'Full Name', 'Enrollment Number', 'Semester', 'Branch', 'Submission Date', 'Submission Time']
+        registrationSheet.getRange(1, 1, 1, 9).setValues([
+          ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Submission Date', 'Submission Time']
         ]);
       }
       
@@ -412,6 +434,8 @@ function doPost(e) {
         data.timestamp,
         data.fullName,
         data.enrollmentNumber,
+        data.contactNumber,
+        data.email,
         data.semester,
         data.branch,
         data.submissionDate,
@@ -422,8 +446,8 @@ function doPost(e) {
       let pledgeSheet = sheet.getSheetByName('Pledges');
       if (!pledgeSheet) {
         pledgeSheet = sheet.insertSheet('Pledges');
-        pledgeSheet.getRange(1, 1, 1, 11).setValues([
-          ['Timestamp', 'Full Name', 'Enrollment Number', 'Semester', 'Branch', 'Pledge Type', 'Pledge Name', 'Pledge Text', 'Pledge Date', 'Submission Date', 'Submission Time']
+        pledgeSheet.getRange(1, 1, 1, 13).setValues([
+          ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Pledge Type', 'Pledge Name', 'Pledge Text', 'Pledge Date', 'Submission Date', 'Submission Time']
         ]);
       }
       
@@ -431,6 +455,8 @@ function doPost(e) {
         data.timestamp,
         data.fullName,
         data.enrollmentNumber,
+        data.contactNumber,
+        data.email,
         data.semester,
         data.branch,
         data.pledgeType,

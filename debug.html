@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Debug Test - VGEC E-Cell</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #4CAF50;
+        }
+        .button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        .button:hover {
+            background: #45a049;
+        }
+        .result {
+            background: #e8f5e8;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #4CAF50;
+        }
+        .error {
+            background: #ffe8e8;
+            border-color: #ff4444;
+            color: #cc0000;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Google Sheets Integration Debug Tool</h1>
+    <p>This page helps you test and debug the Google Sheets integration for contact number and email data.</p>
+
+    <div class="test-section">
+        <h3>Step 1: Test Local Data Storage</h3>
+        <button class="button" onclick="testLocalData()">🧪 Test Local Storage</button>
+        <button class="button" onclick="viewStoredData()">👀 View Stored Data</button>
+        <button class="button" onclick="clearLocalData()">🗑️ Clear Local Data</button>
+        <div id="localDataResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Step 2: Test Registration Data</h3>
+        <button class="button" onclick="createTestRegistration()">📝 Create Test Registration</button>
+        <div id="registrationResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Step 3: Test Pledge Data</h3>
+        <button class="button" onclick="createTestPledge()">🤝 Create Test Pledge</button>
+        <div id="pledgeResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Step 4: Export Data</h3>
+        <button class="button" onclick="exportData()">📊 Export CSV</button>
+        <button class="button" onclick="testGoogleSheetsConnection()">🔗 Test Google Sheets</button>
+        <div id="exportResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Step 5: Current Configuration</h3>
+        <button class="button" onclick="showConfiguration()">⚙️ Show Config</button>
+        <div id="configResult"></div>
+    </div>
+
+    <script src="google-sheets-integration.js"></script>
+    <script>
+        let testGoogleSheets;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            testGoogleSheets = new GoogleSheetsIntegration();
+        });
+
+        function testLocalData() {
+            try {
+                const testData = {
+                    fullName: "Test Student " + Date.now(),
+                    enrollmentNumber: "999999999999",
+                    contactNumber: "9876543210",
+                    email: "test@vgec.com",
+                    semester: "3",
+                    branch: "Computer Engineering"
+                };
+
+                localStorage.setItem('testStudentData', JSON.stringify(testData));
+                const retrieved = JSON.parse(localStorage.getItem('testStudentData'));
+
+                document.getElementById('localDataResult').innerHTML = `
+                    <div class="result">
+                        ✅ Local storage working correctly<br>
+                        <strong>Stored:</strong> ${JSON.stringify(testData, null, 2)}<br>
+                        <strong>Retrieved:</strong> ${JSON.stringify(retrieved, null, 2)}
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('localDataResult').innerHTML = `
+                    <div class="result error">
+                        ❌ Local storage error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function viewStoredData() {
+            const registrations = JSON.parse(localStorage.getItem('allRegistrations') || '[]');
+            const pledges = JSON.parse(localStorage.getItem('allPledges') || '[]');
+
+            document.getElementById('localDataResult').innerHTML = `
+                <div class="result">
+                    <strong>📊 Current Stored Data:</strong><br>
+                    <strong>Registrations:</strong> ${registrations.length} records<br>
+                    <strong>Pledges:</strong> ${pledges.length} records<br><br>
+                    
+                    ${registrations.length > 0 ? `
+                        <strong>Latest Registration:</strong><br>
+                        <code>${JSON.stringify(registrations[registrations.length - 1], null, 2)}</code><br><br>
+                    ` : ''}
+                    
+                    ${pledges.length > 0 ? `
+                        <strong>Latest Pledge:</strong><br>
+                        <code>${JSON.stringify(pledges[pledges.length - 1], null, 2)}</code>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function clearLocalData() {
+            localStorage.removeItem('allRegistrations');
+            localStorage.removeItem('allPledges');
+            localStorage.removeItem('testStudentData');
+            document.getElementById('localDataResult').innerHTML = `
+                <div class="result">
+                    🗑️ All local data cleared
+                </div>
+            `;
+        }
+
+        async function createTestRegistration() {
+            try {
+                const testData = {
+                    fullName: "Debug Test Student",
+                    enrollmentNumber: "111111111111",
+                    contactNumber: "9999999999",
+                    email: "debug@vgec.edu",
+                    semester: "5",
+                    branch: "Information Technology"
+                };
+
+                await testGoogleSheets.sendRegistrationData(testData);
+
+                document.getElementById('registrationResult').innerHTML = `
+                    <div class="result">
+                        ✅ Test registration created<br>
+                        <strong>Data sent:</strong><br>
+                        <code>${JSON.stringify(testData, null, 2)}</code><br>
+                        Check browser console for debug logs.
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('registrationResult').innerHTML = `
+                    <div class="result error">
+                        ❌ Registration test failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function createTestPledge() {
+            try {
+                const testData = {
+                    fullName: "Debug Pledge Student",
+                    enrollmentNumber: "222222222222",
+                    contactNumber: "8888888888",
+                    email: "pledge@vgec.edu",
+                    semester: "7",
+                    branch: "Electrical Engineering",
+                    pledgeType: "comprehensive",
+                    pledgeName: "World Entrepreneurship Day Pledge",
+                    pledgeText: "Test pledge text",
+                    pledgeDate: "21st August, 2025"
+                };
+
+                await testGoogleSheets.sendPledgeData(testData);
+
+                document.getElementById('pledgeResult').innerHTML = `
+                    <div class="result">
+                        ✅ Test pledge created<br>
+                        <strong>Data sent:</strong><br>
+                        <code>${JSON.stringify(testData, null, 2)}</code><br>
+                        Check browser console for debug logs.
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('pledgeResult').innerHTML = `
+                    <div class="result error">
+                        ❌ Pledge test failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function exportData() {
+            try {
+                testGoogleSheets.exportForGoogleSheets();
+                document.getElementById('exportResult').innerHTML = `
+                    <div class="result">
+                        ✅ CSV export initiated<br>
+                        Check your downloads folder for CSV files.
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('exportResult').innerHTML = `
+                    <div class="result error">
+                        ❌ Export failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testGoogleSheetsConnection() {
+            try {
+                const webAppUrl = testGoogleSheets.SHEET_URL;
+                
+                // Test with a simple ping
+                const response = await fetch(webAppUrl, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+
+                document.getElementById('exportResult').innerHTML = `
+                    <div class="result">
+                        🔗 Connection test completed<br>
+                        <strong>Web App URL:</strong> ${webAppUrl}<br>
+                        <strong>Status:</strong> Request sent (CORS prevents reading response)<br>
+                        Check Google Apps Script logs and your Google Sheet for results.
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('exportResult').innerHTML = `
+                    <div class="result error">
+                        ❌ Connection test failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function showConfiguration() {
+            document.getElementById('configResult').innerHTML = `
+                <div class="result">
+                    <strong>🔧 Current Configuration:</strong><br>
+                    <strong>Google Sheet ID:</strong> ${testGoogleSheets.SPREADSHEET_ID}<br>
+                    <strong>Web App URL:</strong> ${testGoogleSheets.SHEET_URL}<br>
+                    <strong>Spreadsheet URL:</strong> <a href="${testGoogleSheets.SPREADSHEET_URL}" target="_blank">Open Sheet</a><br>
+                    <strong>Script Editor:</strong> <a href="${testGoogleSheets.SCRIPT_EDITOR_URL}" target="_blank">Open Script</a><br>
+                    <strong>Is Configured:</strong> ${testGoogleSheets.isConfigured ? '✅ Yes' : '❌ No'}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

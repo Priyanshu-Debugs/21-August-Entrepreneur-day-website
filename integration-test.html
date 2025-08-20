@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Integration Test - VGEC E-Cell</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            background: #e8f4f8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        .success {
+            background: #e8f5e8;
+            border-left-color: #27ae60;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left-color: #f39c12;
+        }
+        .error {
+            background: #f8d7da;
+            border-left-color: #e74c3c;
+        }
+        .button {
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        .button.success {
+            background: #27ae60;
+        }
+        .button.warning {
+            background: #f39c12;
+        }
+        .button.danger {
+            background: #e74c3c;
+        }
+        .result {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-success { background: #27ae60; }
+        .status-warning { background: #f39c12; }
+        .status-error { background: #e74c3c; }
+        .config-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Final Integration Test</h1>
+            <p>Testing Google Sheets integration with your new Web App deployment</p>
+        </div>
+
+        <div class="test-section success">
+            <h3>✅ Configuration Status</h3>
+            <div id="configStatus">Loading configuration...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Live Integration Tests</h3>
+            <button class="button" onclick="testConfiguration()">⚙️ Test Configuration</button>
+            <button class="button success" onclick="testRegistrationFlow()">📝 Test Registration</button>
+            <button class="button success" onclick="testPledgeFlow()">🤝 Test Pledge</button>
+            <button class="button warning" onclick="testWebAppDirect()">🔗 Test Web App Direct</button>
+            <div id="testResults"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Data Verification</h3>
+            <button class="button" onclick="showStoredData()">💾 Show Local Data</button>
+            <button class="button" onclick="exportAllData()">📋 Export CSV</button>
+            <button class="button danger" onclick="clearAllData()">🗑️ Clear All Data</button>
+            <div id="dataResults"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 Quick Actions</h3>
+            <button class="button" onclick="openGoogleSheet()">📊 Open Google Sheet</button>
+            <button class="button" onclick="openMainWebsite()">🏠 Open Main Website</button>
+            <button class="button" onclick="runFullTest()">🔥 Run Full Test Suite</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 Test Results</h3>
+            <div id="fullTestResults"></div>
+        </div>
+    </div>
+
+    <script src="google-sheets-integration.js"></script>
+    <script>
+        let testGoogleSheets;
+        let testResults = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            testGoogleSheets = new GoogleSheetsIntegration();
+            showConfigurationStatus();
+        });
+
+        function showConfigurationStatus() {
+            const config = {
+                spreadsheetUrl: testGoogleSheets.SPREADSHEET_URL,
+                webAppUrl: testGoogleSheets.SHEET_URL,
+                spreadsheetId: testGoogleSheets.SPREADSHEET_ID,
+                isConfigured: testGoogleSheets.isConfigured
+            };
+
+            document.getElementById('configStatus').innerHTML = `
+                <div class="config-item">
+                    <span class="status-indicator ${config.isConfigured ? 'status-success' : 'status-error'}"></span>
+                    <strong>Configuration Status:</strong> ${config.isConfigured ? '✅ READY' : '❌ NOT CONFIGURED'}
+                </div>
+                <div class="config-item">
+                    <strong>🔗 Web App URL:</strong><br>
+                    <code>${config.webAppUrl}</code>
+                </div>
+                <div class="config-item">
+                    <strong>📊 Google Sheet:</strong><br>
+                    <a href="${config.spreadsheetUrl}" target="_blank">Open in new tab</a>
+                </div>
+                <div class="config-item">
+                    <strong>📁 Spreadsheet ID:</strong><br>
+                    <code>${config.spreadsheetId}</code>
+                </div>
+            `;
+        }
+
+        async function testRegistrationFlow() {
+            const testData = {
+                fullName: "Integration Test User",
+                enrollmentNumber: "TEST12345678",
+                contactNumber: "9999999999",
+                email: "integration.test@vgec.edu",
+                semester: "5",
+                branch: "Computer Engineering"
+            };
+
+            try {
+                console.log('🧪 Testing registration flow...');
+                await testGoogleSheets.sendRegistrationData(testData);
+                
+                updateTestResults('Registration Test', '✅ SUCCESS', 
+                    `Test registration sent with contact: ${testData.contactNumber} and email: ${testData.email}`);
+                
+            } catch (error) {
+                updateTestResults('Registration Test', '❌ ERROR', error.message);
+            }
+        }
+
+        async function testPledgeFlow() {
+            const testData = {
+                fullName: "Pledge Test User",
+                enrollmentNumber: "PLEDGE123456",
+                contactNumber: "8888888888",
+                email: "pledge.test@vgec.edu",
+                semester: "7",
+                branch: "Electrical Engineering",
+                pledgeType: "comprehensive",
+                pledgeName: "World Entrepreneurship Day Pledge",
+                pledgeText: "Test pledge for integration",
+                pledgeDate: "21st August, 2025"
+            };
+
+            try {
+                console.log('🧪 Testing pledge flow...');
+                await testGoogleSheets.sendPledgeData(testData);
+                
+                updateTestResults('Pledge Test', '✅ SUCCESS', 
+                    `Test pledge sent with contact: ${testData.contactNumber} and email: ${testData.email}`);
+                
+            } catch (error) {
+                updateTestResults('Pledge Test', '❌ ERROR', error.message);
+            }
+        }
+
+        async function testWebAppDirect() {
+            try {
+                console.log('🧪 Testing Web App direct connection...');
+                
+                const response = await fetch(testGoogleSheets.SHEET_URL, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+
+                updateTestResults('Web App Connection', '✅ SUCCESS', 
+                    'Direct connection to Web App successful (CORS prevents reading response, but request was sent)');
+                
+            } catch (error) {
+                updateTestResults('Web App Connection', '❌ ERROR', error.message);
+            }
+        }
+
+        function testConfiguration() {
+            const config = testGoogleSheets;
+            const issues = [];
+
+            if (!config.SHEET_URL || config.SHEET_URL.includes('PENDING') || config.SHEET_URL.includes('YOUR_')) {
+                issues.push('Web App URL not properly configured');
+            }
+
+            if (!config.SPREADSHEET_ID || config.SPREADSHEET_ID === 'YOUR_SPREADSHEET_ID_HERE') {
+                issues.push('Spreadsheet ID not configured');
+            }
+
+            if (issues.length === 0) {
+                updateTestResults('Configuration Test', '✅ SUCCESS', 'All configuration values are properly set');
+            } else {
+                updateTestResults('Configuration Test', '❌ ERROR', issues.join(', '));
+            }
+        }
+
+        function showStoredData() {
+            const registrations = JSON.parse(localStorage.getItem('allRegistrations') || '[]');
+            const pledges = JSON.parse(localStorage.getItem('allPledges') || '[]');
+
+            const result = `
+📊 LOCAL STORAGE DATA:
+
+Registrations: ${registrations.length} records
+Pledges: ${pledges.length} records
+
+${registrations.length > 0 ? `
+LATEST REGISTRATION:
+${JSON.stringify(registrations[registrations.length - 1], null, 2)}
+` : 'No registrations found'}
+
+${pledges.length > 0 ? `
+LATEST PLEDGE:
+${JSON.stringify(pledges[pledges.length - 1], null, 2)}
+` : 'No pledges found'}
+            `;
+
+            document.getElementById('dataResults').innerHTML = `<div class="result">${result}</div>`;
+        }
+
+        function exportAllData() {
+            try {
+                testGoogleSheets.exportForGoogleSheets();
+                updateDataResults('Export Data', '✅ SUCCESS', 'CSV files exported to downloads folder');
+            } catch (error) {
+                updateDataResults('Export Data', '❌ ERROR', error.message);
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all local data? This cannot be undone.')) {
+                localStorage.removeItem('allRegistrations');
+                localStorage.removeItem('allPledges');
+                updateDataResults('Clear Data', '✅ SUCCESS', 'All local data cleared');
+            }
+        }
+
+        function openGoogleSheet() {
+            window.open(testGoogleSheets.SPREADSHEET_URL, '_blank');
+        }
+
+        function openMainWebsite() {
+            window.open('http://localhost:8000', '_blank');
+        }
+
+        async function runFullTest() {
+            document.getElementById('fullTestResults').innerHTML = '<div class="result">🚀 Running full test suite...</div>';
+            
+            const tests = [
+                { name: 'Configuration', func: testConfiguration },
+                { name: 'Registration Flow', func: testRegistrationFlow },
+                { name: 'Pledge Flow', func: testPledgeFlow },
+                { name: 'Web App Connection', func: testWebAppDirect }
+            ];
+
+            for (const test of tests) {
+                try {
+                    await test.func();
+                    await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second between tests
+                } catch (error) {
+                    console.error(`Test ${test.name} failed:`, error);
+                }
+            }
+
+            // Summary
+            const successCount = testResults.filter(r => r.status.includes('SUCCESS')).length;
+            const totalCount = testResults.length;
+            
+            document.getElementById('fullTestResults').innerHTML = `
+                <div class="result">
+🎯 FULL TEST SUITE COMPLETED
+
+✅ Successful: ${successCount}/${totalCount} tests
+${successCount === totalCount ? '🎉 ALL TESTS PASSED!' : '⚠️ Some tests failed - check individual results above'}
+
+Next Steps:
+1. Check your Google Sheet for new test data
+2. If tests passed, try the main website at http://localhost:8000
+3. Fill out a real form to verify end-to-end functionality
+                </div>
+            `;
+        }
+
+        function updateTestResults(testName, status, details) {
+            testResults.push({ testName, status, details, timestamp: new Date() });
+            
+            const resultDiv = document.getElementById('testResults');
+            resultDiv.innerHTML += `
+                <div class="result">
+<strong>${testName}:</strong> ${status}
+<em>${new Date().toLocaleTimeString()}</em>
+${details}
+                </div>
+            `;
+        }
+
+        function updateDataResults(action, status, details) {
+            const resultDiv = document.getElementById('dataResults');
+            resultDiv.innerHTML = `
+                <div class="result">
+<strong>${action}:</strong> ${status}
+${details}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
