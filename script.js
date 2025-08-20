@@ -3,6 +3,25 @@
 // Student data storage
 let studentData = {};
 
+// Real-time character count for form fields
+function updateCharacterCount(input, counterId, maxLength) {
+    const currentLength = input.value.length;
+    const counter = document.getElementById(counterId);
+    
+    if (counter) {
+        counter.textContent = `${currentLength}/${maxLength} characters`;
+        
+        // Change color based on usage
+        if (currentLength >= maxLength) {
+            counter.style.color = '#e74c3c'; // Red when at limit
+        } else if (currentLength >= maxLength * 0.8) {
+            counter.style.color = '#f39c12'; // Orange when approaching limit
+        } else {
+            counter.style.color = '#7f8c8d'; // Gray for normal usage
+        }
+    }
+}
+
 // Debug function to check stored data
 function debugStoredData() {
     const registrations = JSON.parse(localStorage.getItem('allRegistrations') || '[]');
@@ -25,30 +44,6 @@ function debugStoredData() {
 
 // Add debug button to page
 document.addEventListener('DOMContentLoaded', function() {
-    // Add debug button in development
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        const debugBtn = document.createElement('button');
-        debugBtn.innerHTML = '🔍 Debug Data';
-        debugBtn.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 25px;
-            cursor: pointer;
-            z-index: 1000;
-            font-weight: bold;
-        `;
-        debugBtn.onclick = () => {
-            const data = debugStoredData();
-            alert(`Registrations: ${data.registrations.length}\nPledges: ${data.pledges.length}\nCheck console for details`);
-        };
-        document.body.appendChild(debugBtn);
-    }
-    
     const form = document.getElementById('studentForm');
     if (form) {
         form.addEventListener('submit', function(e) {
@@ -267,9 +262,20 @@ function validateForm(data) {
         return false;
     }
     
-    // Validate name (should contain only letters and spaces)
+    // Validate name (should contain only letters and spaces, max 20 characters)
     if (!/^[a-zA-Z\s]+$/.test(data.fullName.trim())) {
         showError('Please enter a valid name (letters and spaces only)');
+        return false;
+    }
+    
+    // Check name length
+    if (data.fullName.trim().length > 20) {
+        showError('Full name must be 20 characters or less');
+        return false;
+    }
+    
+    if (data.fullName.trim().length < 2) {
+        showError('Full name must be at least 2 characters long');
         return false;
     }
     
@@ -562,6 +568,19 @@ style.textContent = `
     .duplicate-error-popup button:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .character-count {
+        font-size: 0.8rem;
+        color: #7f8c8d;
+        margin-top: 0.3rem;
+        text-align: right;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    
+    .form-group {
+        position: relative;
     }
 `;
 document.head.appendChild(style);

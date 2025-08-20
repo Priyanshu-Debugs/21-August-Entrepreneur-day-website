@@ -63,14 +63,16 @@
                                 <i class="fas fa-user"></i>
                                 Full Name
                             </label>
-                            <input type="text" id="fullName" name="fullName" required placeholder="First Name + Last Name">
+                            <input type="text" id="fullName" name="fullName" required placeholder="First Name + Last Name" maxlength="20" oninput="updateCharacterCount(this, 'nameCharCount', 20)">
+                            <div id="nameCharCount" class="character-count">0/20 characters</div>
                         </div>
                         <div class="form-group responsive-form-group">
                             <label for="enrollmentNumber">
                                 <i class="fas fa-id-card"></i>
                                 Enrollment Number
                             </label>
-                            <input type="text" id="enrollmentNumber" name="enrollmentNumber" required>
+                            <input type="text" id="enrollmentNumber" name="enrollmentNumber" required oninput="validateEnrollmentNumber(this); updateCharacterCount(this, 'enrollmentCharCount', 12)">
+                            <div id="enrollmentCharCount" class="character-count">0/12 digits</div>
                         </div>
                         <div class="form-group responsive-form-group">
                             <label for="contactNumber">
