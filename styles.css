@@ -885,6 +885,12 @@ body {
     z-index: 2;
 }
 
+.footer .contact-list a {
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
+}
+
 .footer .contact-list li {
     font-size: 1rem;
     line-height: 1.7;
@@ -895,24 +901,17 @@ body {
     border: 1px solid rgba(120, 120, 120, 0.3);
     position: relative;
     z-index: 3;
+    color: #e0e0e0;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
 }
 
-.footer .contact-list li:hover {
+.footer .contact-list a:hover li {
     background: rgba(80, 80, 80, 0.95);
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-
-.footer .contact-list a {
-    color: #e0e0e0;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    text-decoration: none;
-}
-
-.footer .contact-list a:hover {
     color: #ffffff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 /* Mobile adjustments */
