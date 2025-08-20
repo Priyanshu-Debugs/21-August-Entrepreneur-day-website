@@ -185,13 +185,13 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    animation: float 6s ease-in-out infinite;
+    animation: float 8s ease-in-out infinite;
 }
 
 .floating-icons i {
     font-size: 4rem;
     opacity: 0.8;
-    animation: bounce 2s ease-in-out infinite alternate;
+    animation: bounce 3s ease-in-out infinite alternate;
 }
 
 .floating-icons i:nth-child(1) { animation-delay: 0s; }
@@ -199,15 +199,16 @@ body {
 .floating-icons i:nth-child(3) { animation-delay: 1s; }
 .floating-icons i:nth-child(4) { animation-delay: 1.5s; }
 .floating-icons i:nth-child(5) { animation-delay: 2s; }
+.floating-icons i:nth-child(6) { animation-delay: 2.5s; }
 
 @keyframes float {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    50% { transform: translateY(-5px); }
 }
 
 @keyframes bounce {
     0% { transform: scale(1); }
-    100% { transform: scale(1.1); }
+    100% { transform: scale(1.05); }
 }
 
 /* Form Section */
