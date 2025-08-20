@@ -125,6 +125,26 @@ body {
     color: #667eea;
 }
 
+/* Navbar verification button specific styling */
+.nav-links .btn-outline {
+    background: transparent !important;
+    color: #667eea !important;
+    border: 2px solid #667eea !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.nav-links .btn-outline:hover {
+    background: #667eea !important;
+    color: white !important;
+    border-color: #667eea !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
 /* Hero Section */
 .hero {
     flex: 1;
@@ -228,12 +248,15 @@ body {
     background: transparent;
     color: #667eea;
     border: 2px solid #667eea;
+    transition: all 0.3s ease;
 }
 
 .btn-outline:hover {
-    background: #667eea;
-    color: white;
+    background: #667eea !important;
+    color: white !important;
+    border-color: #667eea !important;
     transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 /* Hero Graphic */
