@@ -3,6 +3,33 @@
 // Student data storage
 let studentData = {};
 
+// Add contact number and email to studentData on form submit
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('studentForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value.trim();
+            const enrollmentNumber = document.getElementById('enrollmentNumber').value.trim();
+            const contactNumber = document.getElementById('contactNumber').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const semester = document.getElementById('semester').value;
+            const branch = document.getElementById('branch').value;
+
+            studentData = {
+                fullName,
+                enrollmentNumber,
+                contactNumber,
+                email,
+                semester,
+                branch
+            };
+            localStorage.setItem('studentData', JSON.stringify(studentData));
+            window.location.href = 'pledge-selection.html';
+        });
+    }
+});
+
 // Scroll to form function
 function scrollToForm() {
     document.getElementById('pledge-form-section').scrollIntoView({

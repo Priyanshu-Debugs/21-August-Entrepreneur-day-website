@@ -27,7 +27,7 @@ function generateCertificatePDF() {
                 const pageW = doc.internal.pageSize.getWidth();
                 const pageH = doc.internal.pageSize.getHeight();
                 // Name: centered horizontally, estimated at 45% from top
-                doc.setFont('times', 'normal');
+                doc.setFont('TheYoungestSerif', 'normal');
                 doc.setTextColor(36, 36, 36); // #242424
                 doc.setFontSize(45);
                 doc.text(name, pageW/2, (pageH*0.45)+7, { align: 'center' });

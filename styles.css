@@ -1,3 +1,37 @@
+@font-face {
+  font-family: "CustomFont";
+  src: url("/assets/fonts/MyFont.woff2") format("woff2"),
+       url("/assets/fonts/MyFont.woff") format("woff");
+}
+
+body {
+  font-family: "CustomFont", sans-serif;
+}
+/* Brittany Font */
+@font-face {
+  font-family: "Brittany";
+  src: url("/assets/fonts/Brittany.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* The Youngest Serif */
+@font-face {
+  font-family: "TheYoungestSerif";
+  src: url("/assets/fonts/TheYoungestSerif.woff2") format("woff2"),
+       url("/assets/fonts/TheYoungestSerif.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Usage */
+h1, h2 {
+  font-family: "Brittany", cursive;
+}
+
+p, body {
+  font-family: "TheYoungestSerif", serif;
+}
 @media (max-width: 600px) {
     #cert-name-container {
         font-size: 28px !important;

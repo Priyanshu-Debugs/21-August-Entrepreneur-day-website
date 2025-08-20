@@ -94,8 +94,8 @@ class GoogleSheetsIntegration {
     // Generate a CSV format for manual import to Google Sheets
     generateCSVForGoogleSheets(data, type) {
         const headers = type === 'registrations' 
-            ? ['Timestamp', 'Full Name', 'Enrollment Number', 'Semester', 'Branch', 'Submission Date', 'Submission Time']
-            : ['Timestamp', 'Full Name', 'Enrollment Number', 'Semester', 'Branch', 'Pledge Type', 'Pledge Name', 'Pledge Text', 'Pledge Date', 'Submission Date', 'Submission Time'];
+            ? ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Submission Date', 'Submission Time']
+            : ['Timestamp', 'Full Name', 'Enrollment Number', 'Contact Number', 'Email', 'Semester', 'Branch', 'Pledge Type', 'Pledge Name', 'Pledge Text', 'Pledge Date', 'Submission Date', 'Submission Time'];
         
         const csvRows = [headers.join(',')];
         
@@ -177,6 +177,8 @@ class GoogleSheetsIntegration {
         // Always store locally first
         const dataWithTimestamp = {
             ...completeData,
+            contactNumber: completeData.contactNumber,
+            email: completeData.email,
             timestamp: new Date().toISOString(),
             submissionDate: new Date().toLocaleDateString('en-IN'),
             submissionTime: new Date().toLocaleTimeString('en-IN')

@@ -59,6 +59,8 @@ function takePledge() {
     // Add pledge data to student data
     const completeData = {
         ...studentData,
+        contactNumber: studentData.contactNumber,
+        email: studentData.email,
         pledgeType: "comprehensive",
         pledgeName: singlePledgeData.name,
         pledgeText: singlePledgeData.text,
