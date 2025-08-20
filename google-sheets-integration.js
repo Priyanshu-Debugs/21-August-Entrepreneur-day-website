@@ -84,8 +84,8 @@ class GoogleSheetsIntegration {
     autoConfigureForTesting() {
         if (this.SPREADSHEET_ID && this.SPREADSHEET_ID !== 'YOUR_SPREADSHEET_ID_HERE') {
             this.isConfigured = true;
-            console.log('Google Sheets integration configured for spreadsheet:', this.SPREADSHEET_ID);
-            console.log('Spreadsheet URL:', this.SPREADSHEET_URL);
+            // console.log('Google Sheets integration configured for spreadsheet:', this.SPREADSHEET_ID);
+            // console.log('Spreadsheet URL:', this.SPREADSHEET_URL);
             return true;
         }
         return false;

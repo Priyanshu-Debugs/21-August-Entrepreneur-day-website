@@ -1,28 +1,28 @@
-@font-face {
+/* @font-face {
   font-family: "CustomFont";
   src: url("/assets/fonts/MyFont.woff2") format("woff2"),
        url("/assets/fonts/MyFont.woff") format("woff");
-}
+} */
 
-body {
+/* body {
   font-family: "CustomFont", sans-serif;
-}
+} */
 /* Brittany Font */
-@font-face {
+/* @font-face {
   font-family: "Brittany";
   src: url("/assets/fonts/Brittany.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
-}
+} */
 
 /* The Youngest Serif */
-@font-face {
+/* @font-face {
   font-family: "TheYoungestSerif";
   src: url("/assets/fonts/TheYoungestSerif.woff2") format("woff2"),
        url("/assets/fonts/TheYoungestSerif.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-}
+} */
 
 /* Usage */
 h1, h2 {
@@ -820,11 +820,65 @@ body {
 }
 
 /* Footer */
-.footer {
+/* .footer {
     background: #333;
     color: white;
     padding: 3rem 2rem 1rem;
     margin-top: auto;
+} */
+.footer {
+    background: #333; /* keep dark theme */
+    color: #f1f1f1;
+    padding: 2.5rem 1.5rem 1.5rem;
+    margin-top: 40px;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.footer h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #feca57; /* highlight heading */
+}
+
+.footer .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 600px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px 20px;
+    justify-content: center;
+}
+
+.footer .contact-list li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.footer .contact-list a {
+    color: #f1f1f1;
+    font-weight: 500;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.footer .contact-list a:hover {
+    color: #feca57;
+    text-decoration: underline;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .footer {
+        padding: 2rem 1rem;
+    }
+    .footer h3 {
+        font-size: 1.1rem;
+    }
 }
 
 .footer-content {

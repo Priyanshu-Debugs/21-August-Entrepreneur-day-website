@@ -15,6 +15,76 @@ document.addEventListener('DOMContentLoaded', function() {
     addAnimations();
 });
 
+// Show certificate send date message
+document.getElementById('takePledgeBtn').addEventListener('click', showCertificateSendDate);
+
+// Function to show the certificate send date message
+function showCertificateSendDate() {
+    console.log('Showing download success message');
+    showToast(`✅ Certificate will be sent to you email within 24 hours!`, 'success');
+}
+
+// Function to show toast notifications
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    
+    let backgroundColor;
+    switch(type) {
+        case 'success':
+            backgroundColor = 'linear-gradient(45deg, #4caf50, #45a049)';
+            break;
+        case 'error':
+            backgroundColor = 'linear-gradient(45deg, #f44336, #d32f2f)';
+            break;
+        case 'warning':
+            backgroundColor = 'linear-gradient(45deg, #ff9800, #f57c00)';
+            break;
+        default:
+            backgroundColor = 'linear-gradient(45deg, #2196f3, #1976d2)';
+    }
+    
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${backgroundColor};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        z-index: 10002;
+        max-width: 350px;
+        animation: slideInRight 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+    `;
+    
+    toast.innerHTML = message;
+    
+    document.body.appendChild(toast);
+    
+    // Auto-remove after 4 seconds
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 300);
+        }
+    }, 4000);
+    
+    // Allow manual close by clicking
+    toast.addEventListener('click', () => {
+        toast.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 300);
+    });
+}
 // Load and display student data
 function loadStudentData() {
     const studentData = JSON.parse(localStorage.getItem('studentData'));
@@ -84,8 +154,8 @@ function takePledge() {
     
     // Redirect to certificate page
     setTimeout(() => {
-        window.location.href = 'certificate.html';
-    }, 3000);
+        window.location.href = 'index.html';
+    }, 6000);
 }
 
 // Show pledge taken animation
@@ -141,17 +211,17 @@ function showPledgeSuccessMessage() {
             <i class="fas fa-hand-paper"></i>
         </div>
         <h3 style="margin-bottom: 1rem;">Pledge Taken Successfully!</h3>
-        <p style="margin-bottom: 1.5rem; opacity: 0.9;">
+        <p style="font-size: 1.1rem; opacity: 0.8 margin-bottom: 1.5rem; opacity: 0.9;">
             🎉 Congratulations! You have successfully taken the World Entrepreneurship Day Pledge.
             Your commitment to entrepreneurship has been recorded.
         </p>
         <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
-            <p style="margin: 0; font-size: 0.9rem;">
+            <p style="margin: 0; font-size: 1.1rem;">
                 <i class="fas fa-certificate" style="margin-right: 0.5rem;"></i>
                 Generating your personalized certificate...
             </p>
         </div>
-        <div style="font-size: 0.9rem; opacity: 0.8;">
+        <div style="font-size: 1.1rem; opacity: 0.8;">
             <i class="fas fa-clock" style="margin-right: 0.5rem;"></i>
             Please wait while we prepare your certificate
         </div>
@@ -165,7 +235,7 @@ function showPledgeSuccessMessage() {
         if (successOverlay.parentNode) {
             successOverlay.remove();
         }
-    }, 3000);
+    }, 4000);
 }
 
 // Send complete data to Google Sheets
