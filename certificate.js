@@ -1,3 +1,53 @@
+// Generate PDF certificate using jsPDF
+document.addEventListener('DOMContentLoaded', function() {
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', function() {
+            generateCertificatePDF();
+        });
+    }
+});
+
+function generateCertificatePDF() {
+    const name = document.getElementById('cert-name').textContent;
+    const enrollment = document.getElementById('cert-enrollment').textContent;
+    // Use FileReader to load local image as Base64
+    fetch('assets/certificate-template.png')
+        .then(response => response.blob())
+        .then(blob => {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                const base64Img = reader.result;
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+                // Draw the certificate template image as background
+                doc.addImage(base64Img, 'PNG', 0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight());
+                // Overlay text fields
+                // Define pageW and pageH before using them
+                const pageW = doc.internal.pageSize.getWidth();
+                const pageH = doc.internal.pageSize.getHeight();
+                // Name: centered horizontally, estimated at 45% from top
+                doc.setFont('times', 'normal');
+                doc.setTextColor(36, 36, 36); // #242424
+                doc.setFontSize(45);
+                doc.text(name, pageW/2, (pageH*0.45)+7, { align: 'center' });
+                // Enrollment: right-aligned, estimated at 18% from right, 86% from top, shifted 5px left and 10px down
+                doc.setFont('times', 'normal');
+                doc.setFontSize(16);
+                doc.setTextColor(36, 36, 36); // #242424
+                doc.text(enrollment, (pageW*0.82)-5, (pageH*0.86)+19, { align: 'right' });
+                // Save PDF
+                doc.save(`${name}_Entrepreneur_Pledge_Certificate.pdf`);
+            };
+            reader.onerror = function() {
+                alert('Error reading certificate template image. Please check the file path or try a different browser.');
+            };
+            reader.readAsDataURL(blob);
+        })
+        .catch(() => {
+            alert('Error loading certificate template image. Please check the file path or try a different browser.');
+        });
+}
 // Certificate Page JavaScript - Simple PNG Download Version
 
 // Initialize certificate when DOM is loaded
@@ -5,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Certificate page loaded');
     loadCertificateData();
     setupDownloadButton();
-    setupShareButton();
     addCertificateAnimations();
 });
 
@@ -21,14 +70,15 @@ function loadCertificateData() {
     
     console.log('Loading certificate data:', completeData);
     
-    // Populate certificate with student data
-    document.getElementById('cert-name').textContent = completeData.fullName;
-    document.getElementById('cert-enrollment').textContent = completeData.enrollmentNumber;
-    document.getElementById('cert-semester').textContent = completeData.semester + getSemesterSuffix(completeData.semester);
-    document.getElementById('cert-branch').textContent = completeData.branch;
-    document.getElementById('cert-pledge-name').textContent = completeData.pledgeName;
-    document.getElementById('cert-pledge-text').textContent = `"${completeData.pledgeText}"`;
-    document.getElementById('cert-date').textContent = completeData.pledgeDate;
+    // Populate certificate with student data (check if elements exist)
+    const certNameEl = document.getElementById('cert-name');
+    if (certNameEl) certNameEl.textContent = completeData.fullName;
+    const certEnrollEl = document.getElementById('cert-enrollment');
+    if (certEnrollEl) certEnrollEl.textContent = completeData.enrollmentNumber;
+    const certBranchEl = document.getElementById('cert-branch');
+    if (certBranchEl) certBranchEl.textContent = completeData.branch;
+    const certDateEl = document.getElementById('cert-date');
+    if (certDateEl) certDateEl.textContent = completeData.pledgeDate;
     
     // Store data for sharing
     window.certificateData = completeData;
@@ -357,11 +407,7 @@ function hideLoadingOverlay() {
 
 // Setup share button
 function setupShareButton() {
-    const shareBtn = document.getElementById('shareBtn');
-    
-    shareBtn.addEventListener('click', function() {
-        shareCertificate();
-    });
+    // No share button present, so do nothing
 }
 
 // Share certificate

@@ -1,3 +1,20 @@
+@media (max-width: 600px) {
+    #cert-name-container {
+        font-size: 28px !important;
+        font-weight: 500 !important;
+    }
+    #cert-enrollment-container {
+        font-size: 8px !important;
+        right: calc(16% + 5px) !important;
+        top: calc(75% - 15px);
+        max-width: 60vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transform: none !important;
+        font-weight: normal !important;
+    }
+}
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -494,8 +511,14 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     overflow: hidden;
-}
 
+    background: url('assets/certificate-template.png') no-repeat center center;
+    background-size: cover;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    border-radius: 20px;
+    min-height: 650px;
+    overflow: hidden;
+}
 .certificate-border {
     padding: 20px;
     background: linear-gradient(45deg, #667eea, #764ba2, #ff6b6b, #feca57);

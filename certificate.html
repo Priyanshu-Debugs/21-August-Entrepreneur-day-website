@@ -8,58 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Multiple CDN sources for html2canvas -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script>
-        // Fallback to alternative CDN if first one fails
-        if (typeof html2canvas === 'undefined') {
-            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>');
-        }
-    </script>
-    <script>
-        // Second fallback
-        if (typeof html2canvas === 'undefined') {
-            document.write('<script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"><\/script>');
-        }
-    </script>
-    
-    <!-- Additional styles for better screenshots -->
-    <style>
-        .certificate {
-            /* Ensure certificate renders well for screenshots */
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-        
-        /* Right-click context menu enhancement */
-        .certificate {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            position: relative;
-        }
-        
-        /* Add right-click instruction overlay */
-        .screenshot-help {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(102, 126, 234, 0.9);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 100;
-        }
-        
-        .certificate:hover .screenshot-help {
-            opacity: 1;
-        }
-    </style>
+    <!-- jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -76,116 +26,35 @@
 
         <!-- Certificate Section -->
         <section class="certificate-section">
-            <div class="certificate-container">
-                <div class="certificate-header">
-                    <h2>🎉 Congratulations!</h2>
-                    <p>Your Entrepreneurship Pledge Certificate is ready</p>
-                </div>
-
-                <!-- Certificate -->
-                <div class="certificate" id="certificate">
-                    <div class="screenshot-help">
-                        <i class="fas fa-mouse"></i> Right-click to save
-                    </div>
-                    <div class="certificate-border">
-                        <div class="certificate-content">
-                            <div class="certificate-top">
-                                <div class="college-logo">
-                                    <i class="fas fa-university"></i>
-                                </div>
-                                <div class="certificate-title">
-                                    <h1>CERTIFICATE OF PLEDGE</h1>
-                                    <div class="subtitle">Vishwakarma Government Engineering College</div>
-                                    <div class="ecell-title">Entrepreneurship Cell</div>
-                                </div>
-                            </div>
-
-                            <div class="certificate-body">
-                                <div class="certificate-text">
-                                    <p class="intro-text">This is to certify that</p>
-                                    <h2 class="student-name" id="cert-name">Student Name</h2>
-                                    <p class="enrollment-text">Enrollment Number: <span id="cert-enrollment">123456789</span></p>
-                                    <p class="details-text">
-                                        <span id="cert-semester">Semester</span> Semester, <span id="cert-branch">Branch</span>
-                                    </p>
-                                    
-                                    <div class="pledge-section">
-                                        <p class="pledge-intro">has taken the</p>
-                                        <h3 class="pledge-name" id="cert-pledge-name">Pledge Name</h3>
-                                        <div class="pledge-text" id="cert-pledge-text">
-                                            Pledge description will appear here
-                                        </div>
-                                    </div>
-
-                                    <div class="commitment-text">
-                                        <p>and commits to upholding the values of entrepreneurship, innovation, and excellence in their academic and professional journey.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="certificate-footer">
-                                <div class="date-section">
-                                    <p class="date-text">Date: <span id="cert-date"></span></p>
-                                </div>
-                                
-                                <div class="signatures">
-                                    <div class="signature">
-                                        <div class="signature-line"></div>
-                                        <p>Faculty Coordinator</p>
-                                        <p>E-Cell VGEC</p>
-                                    </div>
-                                    <div class="college-seal">
-                                        <div class="seal">
-                                            <i class="fas fa-certificate"></i>
-                                            <p>Official Seal</p>
-                                        </div>
-                                    </div>
-                                    <div class="signature">
-                                        <div class="signature-line"></div>
-                                        <p>President</p>
-                                        <p>E-Cell VGEC</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="certificate-decoration">
-                                <div class="corner-decoration top-left"></div>
-                                <div class="corner-decoration top-right"></div>
-                                <div class="corner-decoration bottom-left"></div>
-                                <div class="corner-decoration bottom-right"></div>
-                            </div>
+            <div class="certificate-container" id="certificate" style="position:relative;">
+                <div style="position:relative; width:100%; max-width:800px; margin:0 auto;">
+                    <img src="assets/certificate-template.png" alt="Certificate Template" style="width:100%; display:block;" crossOrigin="anonymous" />
+                    <div style="position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none;">
+                        <!-- Name overlay: centered horizontally, estimated at 45% from top -->
+                        <div id="cert-name-container" style="position:absolute; left:0; width:100%; text-align:center; font-size:45px; font-family:'Poppins',cursive; font-weight:500; color:#242424; top:45%; transform:translateY(-50%);">
+                            <span id="cert-name">Student Name</span>
+                        </div>
+                        <!-- Enrollment overlay: right-aligned, estimated at 86% from top, 20% from right, shifted 5px left and 10px down -->
+                        <div id="cert-enrollment-container" style="position:absolute; right:20%; font-size:16px; color:#242424; text-align:right; top:calc(86% + 10px); transform:translateX(-5px); font-family:'Times New Roman', Times, serif; font-weight:400;">
+                            <span id="cert-enrollment" style="font-family:'Times New Roman', Times, serif; font-weight:400;">Enrollment</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Action Buttons -->
-                <div class="certificate-actions">
+                <div class="certificate-actions" style="margin-top:2rem; text-align:center;">
                     <button class="btn btn-primary" id="downloadBtn">
                         <i class="fas fa-download"></i>
-                        Download Certificate (PNG)
-                    </button>
-                    <button class="btn btn-secondary" id="shareBtn">
-                        <i class="fas fa-share-alt"></i>
-                        Share Certificate
+                        Download Certificate (PDF)
                     </button>
                     <button class="btn btn-outline" onclick="window.location.href='index.html'">
                         <i class="fas fa-home"></i>
                         Back to Home
                     </button>
                 </div>
-
-                <!-- Success Message -->
-                <div class="success-message" id="successMessage" style="display: none;">
-                    <div class="success-content">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>Certificate Downloaded Successfully!</h3>
-                        <p>Thank you for taking the entrepreneurship pledge. Share your certificate and inspire others!</p>
-                    </div>
-                </div>
             </div>
         </section>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="google-sheets-integration.js"></script>
     <script src="certificate.js"></script>
 </body>
