@@ -196,7 +196,7 @@ function showPledgeSuccessMessage() {
     
     const successMessage = document.createElement('div');
     successMessage.style.cssText = `
-        background: linear-gradient(135deg, #4caf50, #45a049);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 3rem;
         border-radius: 20px;
