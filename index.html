@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VGEC E-Cell - Entrepreneurship Pledge</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container responsive-container">
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-brand">
@@ -23,12 +23,12 @@
 
         <!-- Hero Section -->
         <section class="hero" id="home">
-            <div class="hero-content">
-                <div class="hero-text">
+            <div class="hero-content responsive-hero">
+                <div class="hero-text responsive-hero-text">
                     <h1>Welcome to <span class="highlight">VGEC E-Cell</span></h1>
                     <h2>Vishwakarma Government Engineering College</h2>
                     <p>Join us in taking the Entrepreneurship Pledge and become part of the innovation revolution!</p>
-                    <div class="cta-buttons">
+                    <div class="cta-buttons responsive-cta">
                         <button class="btn btn-primary" onclick="scrollToForm()">
                             <i class="fas fa-hand-paper"></i>
                             Take the Pledge
@@ -39,8 +39,8 @@
                         </button>
                     </div>
                 </div>
-                <div class="hero-graphic">
-                    <div class="floating-icons">
+                <div class="hero-graphic responsive-hero-graphic">
+                    <div class="floating-icons responsive-floating-icons">
                         <i class="fas fa-lightbulb"></i>
                         <i class="fas fa-rocket"></i>
                         <i class="fas fa-chart-line"></i>
@@ -54,31 +54,28 @@
 
         <!-- Form Section -->
         <section class="form-section" id="pledge-form-section">
-            <div class="form-container">
-                <div class="form-header">
+            <div class="form-container responsive-form-container">
+                <div class="form-header responsive-form-header">
                     <h2>Entrepreneurship Pledge Registration</h2>
                     <p>Fill in your details to proceed with the entrepreneurship pledge</p>
                 </div>
-                
-                <form id="studentForm" class="student-form">
-                    <div class="form-grid">
-                        <div class="form-group">
+                <form id="studentForm" class="student-form responsive-student-form">
+                    <div class="form-grid responsive-form-grid">
+                        <div class="form-group responsive-form-group">
                             <label for="fullName">
                                 <i class="fas fa-user"></i>
                                 Full Name
                             </label>
                             <input type="text" id="fullName" name="fullName" required>
                         </div>
-
-                        <div class="form-group">
+                        <div class="form-group responsive-form-group">
                             <label for="enrollmentNumber">
                                 <i class="fas fa-id-card"></i>
                                 Enrollment Number
                             </label>
                             <input type="text" id="enrollmentNumber" name="enrollmentNumber" required>
                         </div>
-
-                        <div class="form-group">
+                        <div class="form-group responsive-form-group">
                             <label for="semester">
                                 <i class="fas fa-graduation-cap"></i>
                                 Semester
@@ -91,8 +88,7 @@
                                 <option value="7">7th Semester</option>
                             </select>
                         </div>
-
-                        <div class="form-group">
+                        <div class="form-group responsive-form-group">
                             <label for="branch">
                                 <i class="fas fa-code-branch"></i>
                                 Branch
@@ -110,8 +106,7 @@
                             </select>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary submit-btn">
+                    <button type="submit" class="btn btn-primary submit-btn responsive-submit-btn">
                         <i class="fas fa-arrow-right"></i>
                         Proceed to Pledge Selection
                     </button>
