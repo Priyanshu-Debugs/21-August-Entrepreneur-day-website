@@ -1,32 +1,11 @@
 // Pledge Selection Page JavaScript
 
-// Define pledge data
-const pledgeData = {
-    innovation: {
-        name: "Innovation Pledge",
-        text: "I pledge to embrace creativity and innovative thinking, constantly seeking new solutions to existing problems and contributing to technological advancement.",
-        icon: "fas fa-lightbulb"
-    },
-    sustainability: {
-        name: "Sustainability Pledge",
-        text: "I pledge to build businesses that prioritize environmental sustainability and social responsibility, creating a positive impact on our planet and society.",
-        icon: "fas fa-leaf"
-    },
-    leadership: {
-        name: "Leadership Pledge",
-        text: "I pledge to develop strong leadership qualities, inspire teams, and create opportunities for others while building successful entrepreneurial ventures.",
-        icon: "fas fa-crown"
-    },
-    excellence: {
-        name: "Excellence Pledge",
-        text: "I pledge to pursue excellence in all my endeavors, continuously learn and improve, and set high standards for quality in my entrepreneurial journey.",
-        icon: "fas fa-trophy"
-    },
-    collaboration: {
-        name: "Collaboration Pledge",
-        text: "I pledge to foster collaboration, build strong partnerships, and believe in the power of collective effort to achieve entrepreneurial success.",
-        icon: "fas fa-handshake"
-    }
+// Define the single comprehensive pledge data
+const singlePledgeData = {
+    name: "World Entrepreneurship Day Pledge",
+    text: "I pledge to: (1) think creatively and embrace innovation, (2) learn from failures and never give up, (3) act with honesty and responsibility in all my ideas, (4) support and respect fellow entrepreneurs, and (5) turn challenges into opportunities for growth.",
+    fullText: "I pledge to think creatively and embrace innovation. I pledge to learn from failures and never give up. I pledge to act with honesty and responsibility in all my ideas. I pledge to support and respect fellow entrepreneurs. I pledge to turn challenges into opportunities for growth.",
+    icon: "fas fa-rocket"
 };
 
 // Initialize page when DOM is loaded
@@ -64,33 +43,27 @@ function getSemesterSuffix(semester) {
 
 // Setup pledge selection functionality
 function setupPledgeSelection() {
-    const pledgeButtons = document.querySelectorAll('.select-pledge');
+    const pledgeButton = document.getElementById('takePledgeBtn');
     
-    pledgeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const pledgeType = this.getAttribute('data-pledge');
-            selectPledge(pledgeType);
+    if (pledgeButton) {
+        pledgeButton.addEventListener('click', function() {
+            takePledge();
         });
-    });
+    }
 }
 
-// Handle pledge selection
-function selectPledge(pledgeType) {
+// Handle taking the pledge
+function takePledge() {
     const studentData = JSON.parse(localStorage.getItem('studentData'));
-    const selectedPledge = pledgeData[pledgeType];
-    
-    if (!selectedPledge) {
-        alert('Invalid pledge selection. Please try again.');
-        return;
-    }
     
     // Add pledge data to student data
     const completeData = {
         ...studentData,
-        pledgeType: pledgeType,
-        pledgeName: selectedPledge.name,
-        pledgeText: selectedPledge.text,
-        pledgeIcon: selectedPledge.icon,
+        pledgeType: "comprehensive",
+        pledgeName: singlePledgeData.name,
+        pledgeText: singlePledgeData.text,
+        pledgeFullText: singlePledgeData.fullText,
+        pledgeIcon: singlePledgeData.icon,
         pledgeDate: new Date().toLocaleDateString('en-IN', {
             day: 'numeric',
             month: 'long',
@@ -101,8 +74,8 @@ function selectPledge(pledgeType) {
     // Store complete data
     localStorage.setItem('completeStudentData', JSON.stringify(completeData));
     
-    // Show selection animation
-    showPledgeSelection(pledgeType);
+    // Show pledge taking animation
+    showPledgeTaken();
     
     // Send complete data to Google Sheets
     sendCompleteDataToGoogleSheets(completeData);
@@ -110,34 +83,25 @@ function selectPledge(pledgeType) {
     // Redirect to certificate page
     setTimeout(() => {
         window.location.href = 'certificate.html';
-    }, 2000);
+    }, 3000);
 }
 
-// Show pledge selection animation
-function showPledgeSelection(pledgeType) {
-    const selectedCard = document.querySelector(`[data-pledge="${pledgeType}"]`).closest('.pledge-card');
-    const allCards = document.querySelectorAll('.pledge-card');
+// Show pledge taken animation
+function showPledgeTaken() {
+    const pledgeCard = document.querySelector('.single-pledge');
+    const pledgeButton = document.getElementById('takePledgeBtn');
     
-    // Dim other cards
-    allCards.forEach(card => {
-        if (card !== selectedCard) {
-            card.style.opacity = '0.3';
-            card.style.transform = 'scale(0.95)';
-        }
-    });
+    // Update button
+    pledgeButton.innerHTML = '<i class="fas fa-check"></i> Pledge Taken Successfully!';
+    pledgeButton.style.background = 'linear-gradient(45deg, #4caf50, #45a049)';
+    pledgeButton.disabled = true;
     
-    // Highlight selected card
-    selectedCard.style.transform = 'scale(1.05)';
-    selectedCard.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
-    selectedCard.style.border = '3px solid #667eea';
+    // Highlight card
+    pledgeCard.style.transform = 'scale(1.02)';
+    pledgeCard.style.boxShadow = '0 20px 60px rgba(76, 175, 80, 0.3)';
+    pledgeCard.style.border = '3px solid #4caf50';
     
-    // Change button text and disable
-    const button = selectedCard.querySelector('.select-pledge');
-    button.innerHTML = '<i class="fas fa-check"></i> Selected!';
-    button.style.background = 'linear-gradient(45deg, #4caf50, #45a049)';
-    button.disabled = true;
-    
-    // Show success message
+    // Show success overlay
     showPledgeSuccessMessage();
 }
 
@@ -160,99 +124,91 @@ function showPledgeSuccessMessage() {
     
     const successMessage = document.createElement('div');
     successMessage.style.cssText = `
-        background: white;
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
         padding: 3rem;
         border-radius: 20px;
         text-align: center;
-        max-width: 400px;
+        max-width: 500px;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         animation: popIn 0.5s ease;
     `;
     
     successMessage.innerHTML = `
-        <div style="color: #4caf50; font-size: 4rem; margin-bottom: 1rem;">
-            <i class="fas fa-check-circle"></i>
+        <div style="font-size: 4rem; margin-bottom: 1rem;">
+            <i class="fas fa-hand-paper"></i>
         </div>
-        <h3 style="color: #333; margin-bottom: 1rem;">Pledge Selected!</h3>
-        <p style="color: #666; margin-bottom: 1.5rem;">
-            Thank you for making your commitment to entrepreneurship.
+        <h3 style="margin-bottom: 1rem;">Pledge Taken Successfully!</h3>
+        <p style="margin-bottom: 1.5rem; opacity: 0.9;">
+            🎉 Congratulations! You have successfully taken the World Entrepreneurship Day Pledge.
+            Your commitment to entrepreneurship has been recorded.
         </p>
-        <div style="color: #667eea;">
-            <i class="fas fa-certificate" style="margin-right: 0.5rem;"></i>
-            Generating your certificate...
+        <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
+            <p style="margin: 0; font-size: 0.9rem;">
+                <i class="fas fa-certificate" style="margin-right: 0.5rem;"></i>
+                Generating your personalized certificate...
+            </p>
+        </div>
+        <div style="font-size: 0.9rem; opacity: 0.8;">
+            <i class="fas fa-clock" style="margin-right: 0.5rem;"></i>
+            Please wait while we prepare your certificate
         </div>
     `;
     
     successOverlay.appendChild(successMessage);
     document.body.appendChild(successOverlay);
     
-    // Remove after 2 seconds
+    // Remove after 3 seconds
     setTimeout(() => {
         if (successOverlay.parentNode) {
             successOverlay.remove();
         }
-    }, 2000);
+    }, 3000);
 }
 
 // Send complete data to Google Sheets
 function sendCompleteDataToGoogleSheets(data) {
     // Load Google Sheets integration if not already loaded
-    if (typeof googleSheets === 'undefined') {
-        // Load the integration script dynamically
-        const script = document.createElement('script');
-        script.src = 'google-sheets-integration.js';
-        script.onload = () => {
+    if (typeof googleSheets !== 'undefined') {
+        try {
             googleSheets.sendPledgeData(data);
-        };
-        document.head.appendChild(script);
-    } else {
-        googleSheets.sendPledgeData(data);
+        } catch (error) {
+            console.log('Google Sheets integration error:', error);
+        }
     }
     
-    console.log('Complete student data sent to Google Sheets integration:', data);
+    console.log('Complete student data prepared for Google Sheets:', data);
 }
 
-// Add animations to pledge cards
+// Add animations to the pledge card
 function addAnimations() {
-    const pledgeCards = document.querySelectorAll('.pledge-card');
+    const pledgeCard = document.querySelector('.single-pledge');
+    const pledgePoints = document.querySelectorAll('.pledge-point');
     
-    // Stagger animation for cards
-    pledgeCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'all 0.6s ease';
+    if (pledgeCard) {
+        // Initial card animation
+        pledgeCard.style.opacity = '0';
+        pledgeCard.style.transform = 'translateY(30px)';
+        pledgeCard.style.transition = 'all 0.8s ease';
         
         setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 200);
-    });
-    
-    // Add hover effects
-    pledgeCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            if (!this.classList.contains('selected')) {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            }
-        });
+            pledgeCard.style.opacity = '1';
+            pledgeCard.style.transform = 'translateY(0)';
+        }, 300);
         
-        card.addEventListener('mouseleave', function() {
-            if (!this.classList.contains('selected')) {
-                this.style.transform = 'translateY(0) scale(1)';
-            }
+        // Animate pledge points
+        pledgePoints.forEach((point, index) => {
+            point.style.opacity = '0';
+            point.style.transform = 'translateX(-20px)';
+            point.style.transition = 'all 0.6s ease';
+            
+            setTimeout(() => {
+                point.style.opacity = '1';
+                point.style.transform = 'translateX(0)';
+            }, 800 + (index * 200));
         });
-    });
+    }
 }
-
-// Add floating animation to pledge icons
-document.addEventListener('DOMContentLoaded', function() {
-    const pledgeIcons = document.querySelectorAll('.pledge-icon i');
-    
-    pledgeIcons.forEach((icon, index) => {
-        icon.style.animation = `iconFloat 3s ease-in-out infinite`;
-        icon.style.animationDelay = `${index * 0.5}s`;
-    });
-});
 
 // Add required CSS animations
 const style = document.createElement('style');
@@ -269,18 +225,36 @@ style.textContent = `
     
     @keyframes iconFloat {
         0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-10px) rotate(10deg); }
+        50% { transform: translateY(-10px) rotate(5deg); }
     }
     
-    .pledge-card {
+    .single-pledge {
         transition: all 0.3s ease;
     }
     
-    .pledge-card:hover {
+    .single-pledge:hover {
         transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
     }
     
-    .select-pledge:disabled {
+    .pledge-point {
+        transition: all 0.3s ease;
+    }
+    
+    .pledge-point:hover {
+        transform: translateX(5px);
+    }
+    
+    .point-number {
+        transition: all 0.3s ease;
+    }
+    
+    .pledge-point:hover .point-number {
+        transform: scale(1.1);
+        background: linear-gradient(45deg, #667eea, #764ba2);
+    }
+    
+    .btn-large:disabled {
         cursor: not-allowed;
         opacity: 1;
     }
@@ -292,6 +266,10 @@ style.textContent = `
     @keyframes slideInFromTop {
         from { opacity: 0; transform: translateY(-20px); }
         to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .pledge-icon i {
+        animation: iconFloat 3s ease-in-out infinite;
     }
 `;
 document.head.appendChild(style);

@@ -15,6 +15,53 @@ function learnMore() {
     alert('Welcome to VGEC E-Cell! We are dedicated to fostering entrepreneurship and innovation among students. Join us in our mission to create the next generation of successful entrepreneurs.');
 }
 
+// Real-time enrollment number validation
+function validateEnrollmentNumber(input) {
+    // Remove any non-digit characters
+    input.value = input.value.replace(/\D/g, '');
+    
+    // Remove existing validation indicators
+    const existingIndicator = input.parentElement.querySelector('.validation-indicator');
+    if (existingIndicator) {
+        existingIndicator.remove();
+    }
+    
+    // Create validation indicator
+    const indicator = document.createElement('div');
+    indicator.className = 'validation-indicator';
+    indicator.style.cssText = `
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    `;
+    
+    if (input.value.length === 0) {
+        // No input yet
+        return;
+    } else if (input.value.length < 12) {
+        // Too short
+        indicator.style.color = '#ff6b6b';
+        indicator.innerHTML = `
+            <i class="fas fa-exclamation-circle"></i>
+            <span>${input.value.length}/12 digits - Please enter ${12 - input.value.length} more digit(s)</span>
+        `;
+        input.style.borderColor = '#ff6b6b';
+    } else if (input.value.length === 12) {
+        // Perfect
+        indicator.style.color = '#4ecdc4';
+        indicator.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            <span>Perfect! 12 digits entered</span>
+        `;
+        input.style.borderColor = '#4ecdc4';
+    }
+    
+    input.parentElement.appendChild(indicator);
+}
+
 // Form validation and submission
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('studentForm');
@@ -101,9 +148,9 @@ function validateForm(data) {
         return false;
     }
     
-    // Validate enrollment number (should be alphanumeric and reasonable length)
-    if (!/^[a-zA-Z0-9]+$/.test(data.enrollmentNumber) || data.enrollmentNumber.length < 3) {
-        showError('Please enter a valid enrollment number');
+    // Validate enrollment number (should be exactly 12 digits)
+    if (!/^\d{12}$/.test(data.enrollmentNumber)) {
+        showError('Enrollment number must be exactly 12 digits');
         return false;
     }
     
