@@ -1476,3 +1476,25 @@ body {
         margin-bottom: 0.5rem;
     }
 }
+.form-closed-message {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 1.5rem;
+    background: #f8f9fa;
+    border: 2px dashed #888;
+    border-radius: 12px;
+    color: #444;
+    font-size: 1.1rem;
+}
+
+.form-closed-message i {
+    font-size: 2rem;
+    color: #d9534f; /* red lock */
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-closed-message p {
+    margin: 0;
+    font-weight: 600;
+}
