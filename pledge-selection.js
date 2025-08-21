@@ -21,7 +21,7 @@ document.getElementById('takePledgeBtn').addEventListener('click', showCertifica
 // Function to show the certificate send date message
 function showCertificateSendDate() {
     console.log('Showing download success message');
-    showToast(`✅ Certificate will be sent to you email within 24 hours!`, 'success');
+    showToast(`✅ Certificate will be sent to your email within 24 hours!`, 'success');
 }
 
 // Function to show toast notifications
