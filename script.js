@@ -84,7 +84,7 @@ function learnMore() {
 // Real-time enrollment number validation
 function validateEnrollmentNumber(input) {
     // Remove any non-digit characters
-    input.value = input.value.replace(/\D/g, '');
+    input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
     
     // Remove existing validation indicators
     const existingIndicator = input.parentElement.querySelector('.validation-indicator');
